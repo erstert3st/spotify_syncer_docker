@@ -356,7 +356,7 @@ class DeemixDownloader:
 
 DEFAULTS = {
     "downloadLocation": "DOWNLOAD_LOCATION_PATH",
-    "tracknameTemplate": "%artist% - %title%",
+    "tracknameTemplate":  "%title% - %artist%-_0",
     "albumTracknameTemplate": "%artist% - %title%",
     "playlistTracknameTemplate": "%position% - %artist% - %title%",
     "createPlaylistFolder": False,

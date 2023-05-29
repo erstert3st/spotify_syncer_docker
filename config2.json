@@ -1,0 +1,38 @@
+{
+    "threads": -1,
+    "anon_metrics_enable": true,
+    "deemix": {
+        "arl": "495dd67b442ddf3db37f7f682203772fbb82271f9c5b29e80266dfdc5e1aa2d27555f3de9822985349a8a343b711e287b5b3bb4787327970cf044f3fa9af2296e733259839057232968f65ff53c8f6ec2cad7e965407da560fed30bd1f93baee",
+        "download_path": "/home/user/Downloads/jkj",
+        "max_bitrate": "lossless",
+        "skip_low_quality": false,
+        "strict_matching": true
+    },
+    "spotify": {
+        "custom_application": {
+            "enabled": false,
+            "client_id": "53542c52a4a4487ca78dcd82b394b2f5",
+            "client_secret": "30cce1abb58f4caa95acb3bba065d12f",
+            "scope": "user-library-read, playlist-read-private, playlist-read-collaborative",
+            "redirect_uri_port": "9090"
+        },
+        "username": "",
+        "playlists": {
+            "enabled": false,
+            "owner_only": true,
+            "excluded": []
+        }
+    },
+    "pushover": {
+        "enabled": false,
+        "user_key": "",
+        "api_token": ""
+    },
+    "autoscan": {
+        "enabled": false,
+        "endpoint": "http://my-api-endpoint.com:3030/triggers/manual",
+        "auth_enabled": true,
+        "username": "admin",
+        "password": "ThisIsNotARealPassword"
+    }
+}

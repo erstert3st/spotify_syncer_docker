@@ -11,7 +11,7 @@ __pycache__/
 
 # pycharm
 .idea/
-
+captcha.py
 
 # C extensions
 *.so

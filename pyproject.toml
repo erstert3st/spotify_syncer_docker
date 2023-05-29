@@ -26,6 +26,16 @@ appdirs = "^1.4.4"
 click-option-group = "^0.5.3"
 pywin32 = {version = "^304", platform = "windows"}
 flatdict = "^4.0.1"
+command = "^0.1.0"
+undetected-chromedriver = "^3.4.6"
+selenium = "^4.8.2"
+xvfbwrapper = "^0.2.9"
+speechrecognition = "^3.9.0"
+pydub = "^0.25.1"
+mysql = "^0.0.3"
+mysql-connector-python = "^8.0.32"
+debugpy = "^1.6.6"
+schedule = "^1.1.0"
 
 [tool.poetry.dev-dependencies]
 black = {version = "^22.6.0", allow-prereleases = true}

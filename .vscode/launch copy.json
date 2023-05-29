@@ -5,19 +5,23 @@
     "version": "0.2.0",
     "configurations": [
         {
-            "name": "Python: Aktuelle Datei",
+            "name": "Python:trySny",
             "type": "python",
             "request": "launch",
+            "module": "poetry",
+            "justMyCode": false,
            // "program": "/home/user/Dokumente/spotify_sync/spotify_sync/__main__.py",
-            "console": "integratedTerminal",
-            "justMyCode": true,
-            // "args": [
-            //     "run",
-            //     "auto",
-            //     "--profile",
-            //     "myFirstProfile"
-            // ]    
-   
+            "args": [
+                "run",
+                "auto",
+                "--profile",
+                "myFirstProfile"
+            ],            
+            "cwd": "${workspaceFolder}",
+            //"cwd": "${workspaceFolder}/spotify_sync",
+            "env": {},
+           // "envFile": "${workspaceFolder}/.env",
+            "console": "integratedTerminal"
         }
     ]
 }
