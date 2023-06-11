@@ -3,5 +3,6 @@ undetected_chromedriver
 selenium
 xvfbwrapper
 SpeechRecognition
-mysql
 debugpy
+ffmpeg
+pydub

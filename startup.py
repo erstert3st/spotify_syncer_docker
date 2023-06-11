@@ -3,17 +3,29 @@ import time
 import schedule
 import threading
 import sys, os
-sys.path.append('/home/user/Schreibtisch/spotDocker/spotify_sync_docker/flac')
+import flac
 # Now do your import
-from musicScrapper import Flaccer
+
+from flac.musicScrapper import Flaccer
 # Get the output of the "spotify_sync config list-paths" command and extract the last 7 characters
 def startup():
     # Check if the output is "-----" = means no config 
-    output = subprocess.check_output(["spotify_sync", "config", "list-paths"]).decode().splitlines()[-1][-7:]
-    if output == "-----":
+    #Todo check if config is valid ? 
+    #Todo download folder
+    #Todo Check if second captcha 
+    #Test config save
+    #Todo ARM 
+    #cleanup
+    #DONE
+    print("start_")
+    output = subprocess.check_output(["spotify_sync", "config", "list"]).decode().splitlines()
+    #print(len(output[))
+    if len(output) < 4 or output[4] != "myFirstProfile":
+        print("no config found")
         subprocess.call(["spotify_sync", "config", "add", "myFirstProfile", "config.json"])
         subprocess.call(["spotify_sync", "utils", "authorize-spotify", "--profile", "myFirstProfile"])
     else:
+        #spotify_sync stats playlists
         print("config ok")
 
 def five_hour_task():
@@ -29,7 +41,8 @@ def hourly_task():
     except subprocess.CalledProcessError as e:
         print("Error occurred:", e)
 
-
+print("startup")
+startup()
 #schedule.every().day.at("16:30").do(daily_task)
 schedule.every(1).hours.do(hourly_task)
 schedule.every(3).hours.do(five_hour_task)
