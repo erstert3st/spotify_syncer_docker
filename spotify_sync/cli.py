@@ -1,7 +1,7 @@
 # defer imports due to click cli speed implications
 
 import sys
-
+import pdb
 from spotify_sync.common import get_temp_fn, dump_json
 from spotify_sync.dataclasses import Config
 from spotify_sync.stats import (
@@ -39,7 +39,8 @@ class SpotifySyncApp:
         from spotify_sync.match import MatchService
         from spotify_sync.autoscan_ import AutoScanService
         from spotify_sync.download import DownloadService
-
+        print("hi2222")
+        #breakpoint()
         self._setup()
 
         self.log("Script started with auto command")
@@ -53,7 +54,6 @@ class SpotifySyncApp:
 
         # Checks
         download_svc.preflight()
-
         spotify_svc.sync()
         match_svc.process_spotify() # fix sync
         download_svc.download_missing_tracks() # fix path

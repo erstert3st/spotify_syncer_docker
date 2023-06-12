@@ -1,5 +1,6 @@
 # Spotify dl project specific
 config.json
+config2.json
 .DS_Store
 .cache-*
 logs/

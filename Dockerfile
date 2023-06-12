@@ -29,15 +29,10 @@ RUN apt-get -y update && apt-get install nano -yqq
 #RUN unzip /tmp/chromedriver.zip chromedriver -d /usr/local/bin/
 #RUN unzip /tmp/chromedriver.zip chromedriver -d /usr/local/bin/
 
-
-
-
 RUN mkdir -p  /musik/MP3
 RUN mkdir /app
 RUN mkdir /root/.config/spotify_sync -p
 
-#COPY config.json /app
-#COPY startup.sh /app
 COPY . /app
 
 WORKDIR /app
@@ -47,6 +42,7 @@ RUN pip3 install --no-cache-dir --upgrade pip
 RUN pip3 install --no-cache-dir Poetry 
 RUN poetry install
 RUN pip3 install -r /app/flac/requirements.txt
+
 #poetry cleanup
 
 #&& pip install -U spot_sync --no-cache-dir 
@@ -55,9 +51,10 @@ RUN pip3 install -r /app/flac/requirements.txt
 RUN pip3 install . 
 RUN apt clean -y
 RUN pip cache purge
+#RUN poetry cache clear --all
 # cmd to run container at start
-#CMD ["/bin/bash", "/app/startup.sh"]
-CMD ["/bin/bash"]
+CMD ["python", "/app/startup.py"]
+#CMD ["/bin/bash"]
 
 # docker build  -t spotifysync:0.3.6 "." --no-cache
 # docker run -it --name spotifysync --rm  -v /home/user/Schreibtisch/tempp:/root/.config/spotify_sync  spotifysync:0.3.1 
@@ -65,6 +62,7 @@ CMD ["/bin/bash"]
 # docker run -it name /bin/bash
 
 # docker run  -it  -v /home/user/Schreibtisch/spotDocker/spotify_sync_docker/flac:/app/flac  -v /home/user/Schreibtisch/tempp:/root/.config/spotify_sync  -p 5678:5678  spotifysync:0.5.20 /bin/bash
+# docker run  -it  -v /home/user/Schreibtisch/spotDocker/spotify_sync_docker:/app  -v /home/user/Schreibtisch/tempp:/root/.config/spotify_sync  -v /home/user/Musik/dir:/musik -p 5678:5678  spotifysync:0.6.3 /bin/bash
 
 #TODO newer Python version may alpine version
 #TODO set env vars in python and remove startuo.sh

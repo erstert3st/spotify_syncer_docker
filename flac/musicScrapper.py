@@ -30,6 +30,7 @@ class Flaccer(object):
         #Make Vars Maybe change that with DockerVars!
         self.captcha_solved= False
         self.base_path = os.getenv("BASE_PATH","/home/user/Musik/dir")
+        print(self.base_path)
         self.mp3_folder =  self.base_path +"/MP3"
         self.flac_folder = self.base_path +"/FLAC"
         self.temp_download = self.base_path +"/TEMP"

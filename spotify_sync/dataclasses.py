@@ -1,7 +1,7 @@
 from attr import dataclass
 from typing import List, Union
 from pathlib import Path
-
+#import pdb
 
 @dataclass
 class Config:
@@ -109,11 +109,15 @@ class SpotifySong:
         self.id_ = (
             song["track"]["id"] if song.get("track") is not None else None
         )
+        #try:
         self.artist = (
             song["track"]["artists"][0]["name"]
             if song.get("track") is not None
             else None
         )
+        #except:
+         #   print("fail")
+          #  breakpoint()
         self.album = (
             song["track"]["album"]["name"]
             if song.get("track") is not None

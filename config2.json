@@ -2,8 +2,8 @@
     "threads": -1,
     "anon_metrics_enable": true,
     "deemix": {
-        "arl": "495dd67b442ddf3db37f7f682203772fbb82271f9c5b29e80266dfdc5e1aa2d27555f3de9822985349a8a343b711e287b5b3bb4787327970cf044f3fa9af2296e733259839057232968f65ff53c8f6ec2cad7e965407da560fed30bd1f93baee",
-        "download_path": "/home/user/Downloads/jkj",
+        "arl": "736329e75aa967ad9ad104e813393f518f9a517c372a0689d87eaec3055ef688ca7aff73e5ad7616f4f8c8c49036b1fb511cd2dc08fc8f7faf37bf3e2dafc094c8c99b36bb76a7340f5f2534d07c23d15b9096b8c7eceebf149d67debf65cb51",
+        "download_path": "/home/user/Schreibtisch/download",
         "max_bitrate": "lossless",
         "skip_low_quality": false,
         "strict_matching": true
@@ -16,10 +16,10 @@
             "scope": "user-library-read, playlist-read-private, playlist-read-collaborative",
             "redirect_uri_port": "9090"
         },
-        "username": "",
+        "username": "31k2ranfdlqq3ng6jktcsmvawqqq",
         "playlists": {
-            "enabled": false,
-            "owner_only": true,
+            "enabled": true,
+            "owner_only": false,
             "excluded": []
         }
     },
