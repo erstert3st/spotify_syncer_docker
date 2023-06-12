@@ -1,4 +1,4 @@
-FROM ultrafunk/undetected-chromedriver:latest
+FROM debian:bullseye
 
 #Set Environment Vars for docker
 ENV arl=xxx 
@@ -16,7 +16,8 @@ ENV BASEBATH=/musik/MP3
 
 EXPOSE 9090
 EXPOSE 5678
-RUN apt-get -y update && apt-get install nano -yqq
+RUN apt-get -y update && apt-get install python pip nano chromium xvfb -yqq
+
 
 # RUN CHROMEVER=$(google-chrome --product-version | grep -o "[^\.]*\.[^\.]*\.[^\.]*") && \
 #     DRIVERVER=$(curl -s "https://chromedriver.storage.googleapis.com/LATEST_RELEASE_$CHROMEVER") && \
@@ -53,10 +54,10 @@ RUN apt clean -y
 RUN pip cache purge
 #RUN poetry cache clear --all
 # cmd to run container at start
-CMD ["python", "/app/startup.py"]
+CMD ["python3", "/app/startup.py"]
 #CMD ["/bin/bash"]
 
-# docker build  -t spotifysync:0.3.6 "." --no-cache
+#
 # docker run -it --name spotifysync --rm  -v /home/user/Schreibtisch/tempp:/root/.config/spotify_sync  spotifysync:0.3.1 
 # docker run -d --name spotifysync -v /home/user/Schreibtisch/tempp:/root/.config/spotify_sync  spotifysync:0.3.1
 # docker run -it name /bin/bash

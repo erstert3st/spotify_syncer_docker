@@ -37,7 +37,7 @@ def startup():
 
 def five_hour_task():
     flaccer = Flaccer() 
-    flaccer.main()
+    flaccer.test()
 
 def try_download():
     try:
@@ -49,7 +49,9 @@ def try_download():
         print("Error occurred:", e)
 
 print("startup")
-try_download()
+
+five_hour_task()
+
 #schedule.every().day.at("16:30").do(daily_task)
 schedule.every(1).minute.do(try_download)
 schedule.every(3).hours.do(five_hour_task)

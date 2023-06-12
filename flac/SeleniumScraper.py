@@ -94,12 +94,15 @@ class SeleniumScraper(object):
         if os.getenv("CHROME_USR_DIR") is not None:
            # chrome_exe_path = "/usr/bin/google-chrome"
             #options.binary_location = chrome_exe_path
+            options.binary_location = "/usr/bin/chromium"
+
             options.arguments.extend(["--no-sandbox", "--disable-setuid-sandbox"]) 
             vdisplay = Xvfb(width= self.xy[0], height= self.xy[1], colordepth=16)
            #  vdisplay = Xvfb(width=1500, height=730, colordepth=16)
             vdisplay.start()
             #self.disp = Display(backend="xvnc",size=(100, 60),color_depth=24 ,rfbport=2020)
            # self.disp.start()
+        else:options.binary_location = "/usr/bin/chromium-browser"
         options.add_argument('--disable-gpu')
         #options.add_argument("--no-sandbox")
         #self.options.add_argument("-user-agent='"+self.ua+"'")

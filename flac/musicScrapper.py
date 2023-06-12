@@ -128,6 +128,11 @@ class Flaccer(object):
 
 
     from .SeleniumScraper import SeleniumScraper
+
+    def test(self):
+        fetcher = self.SeleniumScraper("/download","db")
+        fetcher.check_browser()
+
     def download_flacs(self,file_paths):
         path = ""
         try:   #9222
