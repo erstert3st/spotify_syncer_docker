@@ -1,0 +1,28 @@
+---
+version: "1.0"
+services:
+  spotify_sync:
+    image: spotify_sync:latest
+    container_name: spotify_sync
+    environment:
+      - BASEBATH=/music/
+    volumes:
+      - /mnt/ssd/media/config/spotify_sync:/root/.config/spotify_sync
+      - /mnt/ssd/media/music/downloader:/music
+    ports:
+      - 5678:5678
+      - 9090:9090
+    restart: unless-stopped
+
+version: "3.4"
+services:
+    rclonep:
+        image: rclone/rclone:latest
+        container_name: rclone
+        restart: unless-stopped
+        user: "1000:1000"
+        volumes:
+              - /mnt/ssd/media/config/rclone:/config/rclone 
+              - /mnt/ssd/media/music/downloader:/data
+    ---
+

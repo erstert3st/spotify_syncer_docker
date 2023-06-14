@@ -12,7 +12,7 @@ ENV	wait_time=10
 ENV CHROME_USR_DIR="/root/.config/google-chrome/"
 # set display port to avoid crash
 ENV DISPLAY=:99
-ENV BASEBATH=/musik/MP3
+ENV BASEBATH=/music/MP3
 
 EXPOSE 9090
 EXPOSE 5678
@@ -30,7 +30,7 @@ RUN apt-get -y update && apt-get install python pip nano chromium xvfb -yqq
 #RUN unzip /tmp/chromedriver.zip chromedriver -d /usr/local/bin/
 #RUN unzip /tmp/chromedriver.zip chromedriver -d /usr/local/bin/
 
-RUN mkdir -p  /musik/MP3
+RUN mkdir -p  /music/MP3
 RUN mkdir /app
 RUN mkdir /root/.config/spotify_sync -p
 
@@ -64,6 +64,6 @@ CMD ["python3", "/app/startup.py"]
 
 # docker run  -it  -v /home/user/Schreibtisch/spotDocker/spotify_sync_docker/flac:/app/flac  -v /home/user/Schreibtisch/tempp:/root/.config/spotify_sync  -p 5678:5678  spotifysync:0.5.20 /bin/bash
 # docker run  -it  -v /home/user/Schreibtisch/spotDocker/spotify_sync_docker:/app  -v /home/user/Schreibtisch/tempp:/root/.config/spotify_sync  -v /home/user/Musik/dir:/musik -p 5678:5678  spotifysync:0.6.3 /bin/bash
-
+#docker build  -t spotifysync:0.8.2 "." --no-cache
 #TODO newer Python version may alpine version
 #TODO set env vars in python and remove startuo.sh
