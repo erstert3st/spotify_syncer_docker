@@ -3,13 +3,11 @@ import spotipy
 from spotipy.oauth2 import SpotifyOAuth, SpotifyPKCE, CacheFileHandler
 from tabulate import tabulate
 from typing import List, Dict, Union
-
 # Local imports
 from spotify_sync.config import Config
 from spotify_sync.io_ import PersistentDataService
 from spotify_sync.dataclasses import SpotifySong
-
-
+import pdb
 class SpotifyService:
     def __init__(
         self,
@@ -44,12 +42,21 @@ class SpotifyService:
         self.pd_svc.persist_spotify_songs(liked)
 
     def cache_spotify_auth(self):
+        print("spotify_3")
         auth = self._get_oauth()
+        #breakpoint()
 
         def _auth_headers():
             try:
+                print("hi")
+                breakpoint()
                 token = auth.get_access_token(as_dict=False)
+                print("iam here 1")
+                breakpoint()
             except TypeError:
+                breakpoint()
+                auth.re
+                print(auth.redirect_uri)
                 token = auth.get_access_token()
             return {"Authorization": "Bearer {0}".format(token)}
 
@@ -116,11 +123,12 @@ class SpotifyService:
     def _get_oauth(
         self, force_reauth=False
     ) -> Union[SpotifyOAuth, SpotifyPKCE]:
+        print("_get_oauth3")
         if force_reauth:
             self.pd_svc.get_spotify_oauth().unlink(missing_ok=True)
-
+        print("_get_oauth4")
         handler = CacheFileHandler(cache_path=self.pd_svc.get_spotify_oauth())
-
+        print("_get_oauth5")
         if self.config.data["SPOTIFY_CUSTOM_APPLICATION_ENABLED"]:
             return SpotifyOAuth(
                 open_browser=False,

@@ -26,3 +26,6 @@ services:
               - /mnt/ssd/media/music/downloader:/data
     ---
 
+
+
+rclone authorize  "eyJjbGllbnRfaWQiOiI1NjkwMDg5MDM1MDctMGg1aXIzZ2FyY2dxZ29xNXA2NGg1bHRqaTdhYmFwOWQuYXBwcy5nb29nbGV1c2VyY29udGVudC5jb20iLCJjbGllbnRfc2VjcmV0IjoiR09DU1BYLVpoaE80WHhJSUsyZklEckdkQzR1aWZnZ0lYLS0iLCJzY29wZSI6ImRyaXZlIn0"

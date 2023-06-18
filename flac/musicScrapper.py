@@ -28,20 +28,23 @@ from .custom_except import captchaSolvedExcept
 class Flaccer(object):
     def main(self):
         #Make Vars Maybe change that with DockerVars!
+        print("hi")
         self.captcha_solved= False
         self.base_path = os.getenv("BASE_PATH","/home/user/Musik/dir")
         print(self.base_path)
         self.mp3_folder =  self.base_path +"/MP3"
         self.flac_folder = self.base_path +"/FLAC"
         self.temp_download = self.base_path +"/TEMP"
-        #'/home/user/Musik/dir/MP3/Test  (6jbF)/Vial - Mr. Fuck You'
-        
+        #'/home/user/Musik/dir/MP3/Test  (6jbF)/Vial - Mr. Fuck You'        
         #get music files compare new/existing
-        all_files = self.get_all_files(self.mp3_folder,     endsWith="-_0.mp3")
+
+
+        all_files = self.get_all_files(self.mp3_folder,endsWith=".mp3")
         all_flac_files = self.get_all_files(self.flac_folder,    endsWith=".flac")
         all_flac_ignore_playlist = self.get_all_files(self.flac_folder,    endsWith=".flac", fileNameOnly=True)
         file_list_exist ,file_list_duplicat,file_list_new = [],[],[]
-        
+
+
         for mp3_file in all_files:
             flac_file_name =  mp3_file[:-7].replace("/MP3/", "/FLAC/") + ".flac"
 
@@ -51,14 +54,27 @@ class Flaccer(object):
                 file_list_duplicat.append(mp3_file)
             else:
                 file_list_new.append(mp3_file)
-     
+        # may remove 
+ #       with open(self.mp3_folder + "/flaccer_list.txt", "r") as file:
+ #           list = file.read()
+        
+        # for now on only download list in filelist #Todo find better solution
+
+        # get include list
+  #      folder_list = [f'/{folder.strip()}/' for folder in list.split(',')]
+       
+        # remove all whats not in include list 
+   #     download_flaccer_list  = [path for path in file_list_new if any(folder in path for folder in folder_list)]
+
         #print("file_list_new:" +file_list_new)
         ##print("file_list_duplicat:" +file_list_duplicat)
         #print("file_list_exist:" +file_list_exist)
         #Todo: testing
         try:
-            if len(file_list_duplicat) > 0 : self.copy_duplicate(file_list_duplicat,all_flac_files)           
-            if len(file_list_new) > 0 : self.download_flacs(file_list_duplicat,all_flac_files)
+           # if len(file_list_duplicat) > 0 : self.copy_duplicate(file_list_duplicat,all_flac_files)           
+            
+           # if len(file_list_new) > 0 : self.download_flacs(download_flaccer_list)
+            self.download_flacs(['/home/user/Musik/dir/MP3/liked  (like)/Metallica - Fuel.mp3'])
 
         except captchaSolvedExcept:
             print("second Captcha found wait till next execution")
@@ -87,7 +103,7 @@ class Flaccer(object):
         self.flacfile=destFilename
 
 
-    def get_all_files(self,base_path, include="", execlude="", endsWith="", fileNameOnly=False):
+    def get_all_files(self,base_path, include="", execlude="", endsWith="", startsWith="",fileNameOnly=False):
         allFiles = []
         for dirpath, dirnames, filenames in os.walk(base_path):
             for filename in filenames:
@@ -131,20 +147,26 @@ class Flaccer(object):
 
     def test(self):
         fetcher = self.SeleniumScraper("/download","db")
+        fetcher.login_google()
         fetcher.check_browser()
 
     def download_flacs(self,file_paths):
         path = ""
         try:   #9222
             fetcher = self.SeleniumScraper(self.temp_download,"db")
+            fetcher.captcha_solved = False                         
             random.shuffle(file_paths) # so the loop should not be stuck
             for path in file_paths:
                 #clear downloads
                 self.remove_folder_contents(self.temp_download)
-                status = "1" if fetcher.download_flac(os.path.basename(path),self.temp_download) else "8"
-                self.rename_status(path,status)
+                try:
+                    fetcher.download_flac(os.path.basename(path),self.temp_download) 
+                except  captchaSolvedExcept:
+                    time.sleep(random.randint(153, 255))
+                    continue
 
-                if status > "5" : return  
+               # self.rename_status(path,status)
+
                 for i in range(0, 25):
                     flacFile = self.get_all_files(self.temp_download,endsWith=".flac")
                     if(len(flacFile) > 0) :break
@@ -153,8 +175,7 @@ class Flaccer(object):
             #
             self.copy_check_flac(self,path,True)
 
-        except  captchaSolvedExcept:
-            raise captchaSolvedExcept
+
         except:
            # self.rename_status(path,"9")
             exit(1)

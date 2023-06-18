@@ -24,12 +24,11 @@ class SpotifySyncApp:
     def authorize_spotify(self, force_reauth=False):
         from spotify_sync.io_ import PersistentDataService
         from spotify_sync.spotify_ import SpotifyService
-
-        self._setup(logger=False)
-
+        
+        self._setup(logger=True)
+        print("authSpot1")
         pd_svc = PersistentDataService(self.config)
         spotify_svc = SpotifyService(self.config, pd_svc, force_reauth)
-        
         spotify_svc.cache_spotify_auth()
         print("Successfully cached Spotify OAuth token!")
 

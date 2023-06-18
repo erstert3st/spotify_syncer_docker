@@ -1,5 +1,6 @@
 import os
 import random
+import json 
 import command
 import undetected_chromedriver as uc
 from selenium.webdriver.common.keys import Keys
@@ -19,10 +20,10 @@ from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support    import expected_conditions as EC
 
 class SeleniumScraper(object):
-    def __init__(self,downloadDir ,ua="",  anwesend=False,hoster=[],db=""):
+    def __init__(self,downloadDir="" ,ua="",  anwesend=False,hoster=[],db=""):
         environ['LANGUAGE'] = 'en_US'
         self.url = ""
-        self.captcha_solved_checker = False
+        self.captcha_solved = False
         self.ua = ua if len(ua) > 0 else "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_8_2) AppleWebKit/537.11 (KHTML, like Gecko) Chrome/23.0.1271.6 Safari/537.11"
         self.xy=[1920,1080]
         
@@ -32,11 +33,11 @@ class SeleniumScraper(object):
         print("done")
     
     def kill_chrome(self):
-        try: command.run(['pkill', 'chrome']) 
-        except:print("no chrome open")
+        try: command.run(['pkill', 'chromium']) 
+        except:print("no chromium open")
 
     def open_chrome(self,link,downloadDir,timer=3):
-        self.user_data_dir=os.getenv("CHROME_USR_DIR","/home/user/.config/google-chrome/")
+        self.user_data_dir=os.getenv("CHROME_USR_DIR","/home/user/Schreibtisch/spotDocker/spotify_sync_docker/dir")
         #fixChrashes = self.getChromeData(self.user_data_dir,True,downloadDir=downloadDir)
         #time.sleep(1)
         #if True: self.activateRemoteDebugging()
@@ -48,33 +49,49 @@ class SeleniumScraper(object):
         self.get_chrome_data(self.user_data_dir,True,downloadDir=downloadDir)
         time.sleep(1)
         self.kill_chrome()
-        self.browser = uc.Chrome(headless=False,options=self.options)
+       # self.browser = uc.Chrome(options=self.options)
+        self.browser = uc.Chrome(options=self.options,user_data_dir=self.user_data_dir)
         #self.browser = uc.Chrome(headless=False,user_data_dir=self.user_data_dir,options=self.options)
         print("chrome startet")
-        self.url = link
+        #time.sleep(100)
         time.sleep(2)
+       # self.remote_debugging()
+        self.url = link
+        
         print(self.url)
         self.get_wait_url(self.url,timer)  # add lang
         return True 
     #/usr/bin/google-chrome-stable'
     def check_browser(self):
-        #self.remote_debugging()
-        url = "https://nowsecure.nl/"
+       # self.remote_debugging()
+       #chromium --remote-debugging-address=0.0.0.0 --remote-debugging-port=9222 --headless --disable-gpu --no-sandbox --disable-dev-shm-usage --enable-automation --window-size=1440,900 about:blank
+        url = "chrome://version"
+       # url = "https://nowsecure.nl/"chrome://version/
        # url = "chrome://version"
-        self.open_chrome(url,"/removeMe/",3)
+        self.open_chrome(url,"/music/TEMP",3)
 
         self.browser.save_screenshot("/app/flac/hi.png")       
         time.sleep(50)
         return True
     
-    def login_google(self):
+    def login_google(self,login_spotify_url=""):
         url    = 'https://accounts.google.com/ServiceLogin'
-        self.time   = 10
+        with open('flac/login.txt') as f:
+            login_data = json.loads(f.read())
+        self.open_chrome(url,"/music/TEMP",3)
+        WebDriverWait(self.browser, 20).until(EC.visibility_of_element_located((By.NAME, 'identifier'))).send_keys(f'{login_data["mail"]}\n')
         time.sleep(2)
-        WebDriverWait(self.browser, 20).until(EC.visibility_of_element_located((By.NAME, 'identifier'))).send_keys(f'{email}\n')
-        time.sleep(2)
-        WebDriverWait(self.browser, 20).until(EC.visibility_of_element_located((By.NAME, 'Passwd'))).send_keys(f'{password}\n')
-                                                                                 
+        WebDriverWait(self.browser, 20).until(EC.visibility_of_element_located((By.NAME, 'Passwd'))).send_keys(f'{login_data["password"]}\n')
+        if len(login_spotify_url) > 1:
+            self.get_wait_url(login_spotify_url,5)
+            login = self.browser.find_elements(By.XPATH, '/*[@id="root"]/div/div[2]/div/div/ul/li[1]/button/span[2]')
+            if len(login) > 0:
+                self.click_wait(element=login[0],timer=5)
+            WebDriverWait(self.browser, 20).until(EC.visibility_of_element_located((By.NAME, 'identifier'))).send_keys(f'{login_data["mail"]}\n')
+            time.sleep(2)
+            WebDriverWait(self.browser, 20).until(EC.visibility_of_element_located((By.NAME, 'Passwd'))).send_keys(f'{login_data["password"]}\n')
+            self.click_wait(selectorType=By.XPATH, selector='//*[@id="root"]/div/div[2]/div/div/div[3]/button/div[2]',timer=5)
+            return self.browser.current_url
     def remote_debugging(self):
     # 5678 is the default attach port in the VS Code debug configurations. Unless a host and port are specified, host defaults to 127.0.0.1
         #debugpy.listen(5678)
@@ -88,7 +105,7 @@ class SeleniumScraper(object):
         
         options = uc.ChromeOptions()
 
-
+        print(downloadDir)
         #if in docker
 
         if os.getenv("CHROME_USR_DIR") is not None:
@@ -103,24 +120,32 @@ class SeleniumScraper(object):
             #self.disp = Display(backend="xvnc",size=(100, 60),color_depth=24 ,rfbport=2020)
            # self.disp.start()
         else:options.binary_location = "/usr/bin/chromium-browser"
-        options.add_argument('--disable-gpu')
+        print(options.binary_location)
+       # options.add_argument('--disable-gpu')
         #options.add_argument("--no-sandbox")
         #self.options.add_argument("-user-agent='"+self.ua+"'")
-        #options.add_argument('--remote-debugging-port=9000')
+       # options.add_argument('--remote-debugging-address=0.0.0.0')
+        #options.add_argument('--remote-debugging-port=9222')
        # options.add_argument("--headless=new")
         #options.add_argument("detach", True)
-        #options.add_argument("--load-extension=/"+os.getenv("UBLOCK_DIR","home/user/Schreibtisch/SCRPPER/seleniumTest/uBlock0.chromium"))
+        #print("--load-extension="+os.getenv("UBLOCK_DIR","/home/user/Schreibtisch/SCRPPER/seleniumTest/uBlock0.chromium"))
+        options.add_argument("--load-extension="+os.getenv("UBLOCK_DIR","/home/user/Schreibtisch/SCRPPER/seleniumTest/uBlock0.chromium"))
         #options.add_argument("--enable-logging= --v=1 > log.txt 2>&1")
         #options.add_argument("--enable-logging=stderr --v=1")
        # options.add_argument("--profile-directory=Default")
         #options.add_argument("--profile-directory=Defau1t")
-        options.debugger_address = "localhost:9222"
+        options.debugger_address = "127.0.0.1:9223"
         #options.add_argument("--lang=en")
         #options.add_experimental_option('prefs', {'intl.accept_languages':  "de,DE"})
         options.add_argument("--window-size="+str(self.xy[0])+","+str(self.xy[1]))
        # options.add_argument("--disable-session-crashed-bubble") #downloadDir,
-      #  temp = {"download.default_directory": '/home/user/Musik/dir/TEMP'}
+        #temp = {"download.default_directory": '/home/user/Music/dir/TEMP'}
        # options.add_experimental_option("prefs",temp )
+
+        options.add_experimental_option("prefs", {"download.default_directory": downloadDir,
+                                            "download.prompt_for_download": False,
+                                            "download.directory_upgrade": True,
+                                            "safebrowsing.enabled": True})
         self.options = options
         return options
         #options.add_argument("--profile-directory=Default")
@@ -171,6 +196,9 @@ class SeleniumScraper(object):
             if len(audio_url) < 1: raise Exception
             # verifying the answer
             solution = captcha().captchaSolver(audio_url)
+            if self.captcha_solved is False:
+                self.captcha_solved = True
+            else: raise captchaSolvedExcept
             time.sleep(random.randint(5, 9))
             # answer_input
             self.browser.find_element(By.ID, 'audio-response').send_keys(solution)
@@ -214,7 +242,7 @@ class SeleniumScraper(object):
 
     def download_flac(self,file_path,download_path):  
         modul  = "musicDownloader"
-        file_name =  os.path.splitext(file_path)[0][:-3]
+        file_name =  file_path[:-4]
         self.open_chrome("https://free-mp3-download.net/" ,downloadDir=download_path,timer=7)  
        # self.get_wait_url("https://free-mp3-download.net/")
         # playlistPattern = r"^\d{2,3}\s-"
@@ -236,12 +264,12 @@ class SeleniumScraper(object):
         if len(captcha) > 0: 
             self.click_wait(element=captcha[0],timer=5)
             #Handle second Captcha!
-            if self.captcha_solved_checker and self.captcha_check(By.CSS_SELECTOR,"body > div:nth-child(13) > div:nth-child(4) > iframe",dry_run=True):
-                raise captchaSolvedExcept #Todo: named Excec # captcha ausgebäutet 
+            self.captcha_check(By.CSS_SELECTOR,"body > div:nth-child(13) > div:nth-child(4) > iframe",dry_run=True)
             self.captcha_solved_checker = self.captcha_check(By.CSS_SELECTOR,"body > div:nth-child(13) > div:nth-child(4) > iframe")
             self.browser.switch_to.default_content()
 
         self.click_wait(selectorType=By.TAG_NAME,selector="button",timer=3)
+        time.sleep(100)
         return True
 if __name__ == "__main__":
      print("start")
