@@ -1,3 +1,3 @@
-class captchaSolvedExcept(Exception):
+class captcha_solved_Except(Exception):
     def __str__(self):
-        return "Solved Captcha wait till next Execution"
+        return "Solved Captcha once, wait till next Execution"

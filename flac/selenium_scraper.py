@@ -5,7 +5,7 @@ import command
 import undetected_chromedriver as uc
 from selenium.webdriver.common.keys import Keys
 from .captcha import captcha
-from .custom_except import captchaSolvedExcept
+from .custom_except import captcha_solved_except
 from os import environ
 from selenium.webdriver.common.action_chains import ActionChains
 from selenium.webdriver.common.by import By
@@ -19,7 +19,7 @@ import time
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support    import expected_conditions as EC
 
-class SeleniumScraper(object):
+class selenium_scraper(object):
     def __init__(self,downloadDir="" ,ua="",  anwesend=False,hoster=[],db=""):
         environ['LANGUAGE'] = 'en_US'
         self.url = ""
@@ -198,7 +198,7 @@ class SeleniumScraper(object):
             solution = captcha().captchaSolver(audio_url)
             if self.captcha_solved is False:
                 self.captcha_solved = True
-            else: raise captchaSolvedExcept
+            else: raise captcha_solved_except
             time.sleep(random.randint(5, 9))
             # answer_input
             self.browser.find_element(By.ID, 'audio-response').send_keys(solution)
