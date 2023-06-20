@@ -13,7 +13,7 @@ app = SpotifySyncApp()
 # Call the sync_spotify() function
 app.sync_spotify()
 
-from flac.musicScrapper import Flaccer
+from flac.flaccer import Flaccer
 # Get the output of the "spotify_sync config list-paths" command and extract the last 7 characters
 Spotify_run =False
 Flaccer_run = False
