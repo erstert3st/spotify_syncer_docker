@@ -7,18 +7,18 @@ import sys, os
 
 # Now do your import
 
-from flac.flaccer import Flaccer
+from flac.flacer import Flacer
 # Get the output of the "spotify_sync config list-paths" command and extract the last 7 characters
 Spotify_run =False
-Flaccer_run = False
+Flacer_run = False
 def get_flaccs():
-    global Flaccer_run
-    if Flaccer_run is False:
+    global Flacer_run
+    if Flacer_run is False:
         Spotify_run  = True
-    flaccer = Flaccer() 
-    print("startflaccer")
-    flaccer.test()
-   # flaccer_run = Falsemain
+    flacer = Flacer() 
+    print("startflacer")
+    flacer.test()
+   # flacer_run = Falsemain
 
 
 get_flaccs()

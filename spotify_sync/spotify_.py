@@ -49,14 +49,14 @@ class SpotifyService:
         def _auth_headers():
             try:
                 print("hi")
-                breakpoint()
+                #breakpoint()
                 token = auth.get_access_token(as_dict=False)
                 print("iam here 1")
-                breakpoint()
+                #breakpoint()
             except TypeError:
-                breakpoint()
-                auth.re
-                print(auth.redirect_uri)
+                #breakpoint()
+                #auth.re
+               #ä print(auth.redirect_uri)
                 token = auth.get_access_token()
             return {"Authorization": "Bearer {0}".format(token)}
 

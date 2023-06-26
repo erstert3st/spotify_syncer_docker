@@ -1,5 +1,5 @@
 //        {
- /*   "name": "Python: Aktuelle Datei",
+/*   "name": "Python: Aktuelle Datei",
     "type": "python",
     "request": "launch",
     "program": "${file}",
@@ -8,15 +8,12 @@
 }
 
 */
-
 {
     // Verwendet IntelliSense zum Ermitteln möglicher Attribute.
     // Zeigen Sie auf vorhandene Attribute, um die zugehörigen Beschreibungen anzuzeigen.
     // Weitere Informationen finden Sie unter https://go.microsoft.com/fwlink/?linkid=830387
     "version": "0.2.0",
     "configurations": [
-        
-        
         {
             "name": "Python: Remote-Attach",
             "type": "python",
@@ -28,13 +25,19 @@
             "pathMappings": [
                 {
                     "localRoot": "${workspaceFolder}/src",
-                    "remoteRoot": "/usr/src/app"
+                    "remoteRoot": "app"
                 }
             ],
-            "justMyCode": true
+            "justMyCode": false
+        },
+        {
+            "name": "poetry",
+            "type": "python",
+            "request": "launch",
+            "cwd": "${workspaceFolder}",
+            "module": "spotify_sync",
+            "args": ["config","add", "myFirstProfile", "/home/user/Schreibtisch/spotDocker/spotify_sync_docker/config.json"],
+            "justMyCode": false
         }
     ]
 }
-
-
-
