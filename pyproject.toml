@@ -28,6 +28,7 @@ pywin32 = {version = "^304", platform = "windows"}
 flatdict = "^4.0.1"
 schedule = "^1.1.0"
 command = "^0.1.0"
+google-api-python-client = "^2.90.0"
 
 [tool.poetry.dev-dependencies]
 black = {version = "^22.6.0", allow-prereleases = true}
