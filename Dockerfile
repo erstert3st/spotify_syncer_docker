@@ -13,7 +13,7 @@ ENV EMAIL=""
 ENV PASSWORD=""
 ENV CONFIG_PROFILE="myFirstProfile"
 ENV MANUAL_CONFIG_FILE="/app/config.json"
-
+ENV CLIENT_SECRET_FILE="app/syncer/client_secret.json"
 
 #9090 = spotify 9222-3 debug chrome  5678 debug code
 EXPOSE 9090 
