@@ -261,7 +261,7 @@ def config_generate() -> None:
 
 if __name__ == "__main__":
     cli()
-    #app.auto()
+    app.auto()
 
 
 #Todo:

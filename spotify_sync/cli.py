@@ -327,3 +327,5 @@ class SpotifySyncApp:
 
         if config.data["ANON_METRICS_ENABLE"]:
             self._metrics = MetricsService(PersistentDataService(config))
+
+
