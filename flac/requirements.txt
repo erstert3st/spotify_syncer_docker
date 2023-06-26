@@ -6,3 +6,4 @@ SpeechRecognition
 debugpy
 ffmpeg
 pydub
+pytest
