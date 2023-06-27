@@ -143,3 +143,5 @@ flac/uBlock0.chromium
 dir/*
 drive/client_secret_sample.json
 syncer/client_secret.json
+Dockerfile.secret
+Todo.todo

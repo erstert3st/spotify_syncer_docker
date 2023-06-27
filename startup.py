@@ -22,6 +22,9 @@ def build_spotify():
     app.authorize_spotify()
     print("logins spotify done")
 
+def build_syncer():
+    
+
 def sync_google_drive():
     print("google drive sync start:")
     Syncer.main()
@@ -30,6 +33,7 @@ def startup_flacer():
     global flacer_run
     if flacer_run is False:
         flacer_run  = True
+        
         try:
             flacer = Flacer() 
             print("startflacer")
@@ -55,13 +59,14 @@ def startup_spotify():
             
         spotify_run = False 
 
+def run_test():
+    pytest.main([ '-s', 'py_test.py'])
 def main():
+   
     sync_google_drive()
     build_flacer()
     build_spotify()
-    pytest.main(['-x', '-s', 'app/pytest.py'])
     print("startup")
-    #Todo : Make PyProject
     #Todo : Make flacer as modul 
     #Todo : all other Todos :P
     #schedule.every().day.at("16:30").do(daily_task)
@@ -75,7 +80,7 @@ def main():
         schedule.run_pending()
         time.sleep(1)
 if __name__ == "__main__":
-    sync_google_drive()
+    run_test()
     #  os.environ["CONFIG_PROFILE"] = "myFirstProfile"
     #  os.environ["MANUAL_CONFIG_FILE"] = "/home/user/Schreibtisch/spotDocker/spotify_sync_docker/config.json"
     #  build_spotify()

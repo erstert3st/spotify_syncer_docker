@@ -36,7 +36,7 @@
             "request": "launch",
             "cwd": "${workspaceFolder}",
             "module": "spotify_sync",
-            "args": ["config","add", "myFirstProfile", "/home/user/Schreibtisch/spotDocker/spotify_sync_docker/config.json"],
+            "args": ["utils","authorize-spotify", "--profile","myFirstProfile"],
             "justMyCode": false
         }
     ]

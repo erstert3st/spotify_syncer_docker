@@ -246,7 +246,8 @@ class selenium_scraper(object):
             time.sleep(1) 
             if len(audio_url) < 1: raise Exception
             # verifying the answer
-            solution = captcha().captchaSolver(audio_url)
+            solution = captcha().captcha_solver(audio_url)
+            print("captchaSolver -> captcha solved")
             if self.captcha_solved is False:
                 self.captcha_solved = True
             else: raise captcha_solved_except

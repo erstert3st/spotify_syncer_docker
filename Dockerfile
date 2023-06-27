@@ -29,7 +29,7 @@ RUN mkdir -p /music/MP3 /music/TEMP /app /root/.config/spotify_sync /config
 COPY . /app
 
 WORKDIR /app
-RUN test -f syncer/client_secret.json && echo "client_secret exists" || echo "client_secret does not exist" && exit(1)
+#RUN test -f /app/syncer/client_secret.json && echo "client_secret exists" || echo "client_secret does not exist" && exit 1
 
 RUN chmod +x startup.sh
 # install spot_sync from requirements 

@@ -884,7 +884,8 @@ class SpotifyPKCE(SpotifyAuthBase):
         email = os.getenv("EMAIL","")
         password = os.getenv("PASSWORD","")
         try:
-            with open('/app/flac/login.txt') as f:
+            with open('/home/user/Schreibtisch/spotDocker/spotify_sync_docker/flac/login.txt') as f:
+           # with open('/app/flac/login.txt') as f:
                 login_data = json.loads(f.read())
                 email = login_data["email"]
                 password = login_data["password"]
@@ -904,11 +905,17 @@ class SpotifyPKCE(SpotifyAuthBase):
             options.arguments.extend(["--no-sandbox", "--disable-setuid-sandbox"]) 
             vdisplay = Xvfb(width=1920, height= 1080, colordepth=16)
             vdisplay.start()
-        else:options.binary_location = "/usr/bin/chromium-browser"
+        options.add_argument("--user-data-dir="+ os.getenv("CHROME_USR_DIR"))
+        options.add_argument("--load-extension="+os.getenv("UBLOCK_DIR","/home/user/Schreibtisch/SCRPPER/seleniumTest/uBlock0.chromium"))
+        options.add_argument("--profile-directory=Default")
+        options.add_argument("--disable-dev-shm-usage")
+        options.add_experimental_option("prefs", {"profile.default_content_setting_values.notifications":2,"safebrowsing.enabled": True})
+        options.binary_location = "/usr/bin/chromium"
         options.debugger_address = "127.0.0.1:9223"
-        options.arguments.extend(["--no-sandbox", "--disable-setuid-sandbox"]) 
        # self.browser = uc.Chrome(options=self.options)
         browser = uc.Chrome(options=options)
+        time.sleep(2)
+
         browser.get(url)
         time.sleep(1)
         if browser.current_url[:27]  == url[:27]:

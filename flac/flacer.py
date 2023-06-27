@@ -158,7 +158,7 @@ class Flacer(object):
 
     def copy_check_flac(self,source,flac=""):
         self.flac_file = flac
-        status = "2" if self.copy_flac_file(source,flac) else "7"
+        self.copy_flac_file(source,flac)
         self.flac_file = ""
    #need ?      ##time.sleep(random.randint(45,60))
     
@@ -194,16 +194,20 @@ class Flacer(object):
             # solve captcha -> try again -> if new captcha Wait x Seconds  
             scraper.captcha_solved = False                        
             random.shuffle(file_paths) # so the loop should not be stuck
+            self.counter = 0
             for path in file_paths:
                 #clear downloads
                 self.remove_folder_contents(self.temp_download)
                 try:
                     scraper.download_flac(os.path.basename(path),self.temp_download) 
                 except  captcha_solved_except:
+                    self.counter += 1
                     time.sleep(random.randint(153, 255))
-                    continue
-
-               # self.rename_status(path,status)
+                    if self.counter <=2: 
+                        continue
+                    else:
+                        del self.counter
+                        raise Exception
 
                 for i in range(0, 25):
                     flac_file = self.get_all_files(self.temp_download,ends_with=".flac")
@@ -212,8 +216,9 @@ class Flacer(object):
                     if i == 25: raise Exception
             #
             
-            if run_test is False: self.copy_check_flac(self,path,True)
-
+            if run_test is False: 
+                self.copy_check_flac(self,path,True)
+                self.new_files = True 
 
         except:
             raise Exception

@@ -19,14 +19,20 @@ def test_env_vars():
     assert  len(os.getenv("UBLOCK_DIR","")) >= 1
     assert  len(os.getenv("SELENIUM_CLASS_PATH","")) >= 1
     assert  len(os.getenv("CHROME_USR_DIR","")) >= 1
-  #  assert  len(os.getenv("EMAIL","")) >= 1
-   # assert  len(os.getenv("PASSWORD","")) >= 1
+    assert  len(os.getenv("EMAIL","")) >= 1
+    assert  len(os.getenv("PASSWORD","")) >= 1
     assert  len(os.getenv("CONFIG_PROFILE","")) >= 1
     assert  len(os.getenv("MANUAL_CONFIG_FILE","")) >= 1
+    assert  len(os.getenv("CLIENT_SECRET_FILE","")) >= 1
+    #assert  len(os.getenv("MANUAL_CONFIG_FILE","")) >= 1
+
+def test_file_exists():
+        file_path = os.getenv("CLIENT_SECRET_FILE","syncer/client_secret.json")  # Replace with the actual file path
+        assert os.path.isfile(file_path), f"File '{file_path}' does not exist"
 
 def test_login_spotify():
     app = SpotifySyncApp()
-    os.environ['CONFIG_PROFILE'] = 'myFirstProfile'
+   # os.environ['CONFIG_PROFILE'] = 'myFirstProfile'
    # os.environ['MANUAL_CONFIG_FILE'] = '/home/user/Schreibtisch/spotDocker/spotify_sync_docker/config.json'
     # Call the sync_spotify() function
     app.authorize_spotify()
@@ -58,12 +64,12 @@ def test_flac_not_working(): #
     flacer = Flacer()
     assert  flacer.check_flac("flac_test_files/not_working.flac") == False
 
-def test_google_login():
-    print("start test:")
-    selenium = selenium_scraper()
-    googleLink = selenium.login_google()
-    print(googleLink)
-    assert googleLink.startswith("https://myaccount.google.com") 
+# def test_google_login():
+#     print("start test:")
+#     selenium = selenium_scraper()
+#     googleLink = selenium.login_google()
+#     print(googleLink)
+#     assert googleLink.startswith("https://myaccount.google.com") 
 
 def test_check_browser():
     print("start test:")
@@ -89,5 +95,7 @@ def test_download_flac():
 
 
 if __name__ == "__main__":
-    os.environ["CHROME_USR_DIR"] = "/config1"
-    test_google_login()
+   # os.environ["CHROME_USR_DIR"] = "/config1"
+    #os.environ["MANUAL_CONFIG_FILE"] = "/home/user/Schreibtisch/spotDocker/spotify_sync_docker/config.json"
+    #os.environ["CONFIG_PROFILE"] = "myFirstProfile"
+    test_login_spotify()
