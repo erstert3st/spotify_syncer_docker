@@ -38,7 +38,7 @@ def test_login_spotify():
     app.authorize_spotify()
     assert True == True
 def test_copy():
-    base_path = os.getenv("BASE_PATH","/home/user/Musik/dir")
+    base_path = os.getenv("BASE_PATH","/home/user/Musik/music")
     temp_folder = os.path.join(base_path ,"TEMP")
     flacer = Flacer
 
@@ -64,12 +64,12 @@ def test_flac_not_working(): #
     flacer = Flacer()
     assert  flacer.check_flac("flac_test_files/not_working.flac") == False
 
-# def test_google_login():
-#     print("start test:")
-#     selenium = selenium_scraper()
-#     googleLink = selenium.login_google()
-#     print(googleLink)
-#     assert googleLink.startswith("https://myaccount.google.com") 
+def test_google_login():
+     print("start test:")
+     selenium = selenium_scraper()
+     googleLink = selenium.login_google()
+     print(googleLink)
+     assert googleLink.startswith("https://myaccount.google.com") 
 
 def test_check_browser():
     print("start test:")

@@ -14,7 +14,7 @@ ENV PASSWORD=""
 ENV CONFIG_PROFILE="myFirstProfile"
 ENV MANUAL_CONFIG_FILE="/app/config.json"
 ENV CLIENT_SECRET_FILE="app/syncer/client_secret.json"
-
+ENV RUN_TEST="True"
 #9090 = spotify 9222-3 debug chrome  5678 debug code
 EXPOSE 9090 
 EXPOSE 9223
@@ -62,16 +62,14 @@ CMD ["python3", "startup.py"]
 
 
 
-#
-# docker run -it --name spotifysync --rm  -v /home/user/Schreibtisch/tempp:/root/.config/spotify_sync  spotifysync:0.3.1 
-# docker run -d --name spotifysync -v /home/user/Schreibtisch/tempp:/root/.config/spotify_sync  spotifysync:0.3.1
+
 # docker run -it name /bin/bash
 
-# docker run  -it  -v /home/user/Schreibtisch/spotDocker/spotify_sync_docker/flac:/app/flac  -v /home/user/Schreibtisch/tempp:/root/.config/spotify_sync  -p 5678:5678  spotifysync:0.5.20 /bin/bash
-# docker run  -it  -v /home/user/Schreibtisch/spotDocker/spotify_sync_docker:/app  -v /home/user/Schreibtisch/tempp:/root/.config/spotify_sync  -v /home/user/Musik/dir:/music -p 5678:5678  spotifysync:0.9.3 /bin/bash
-# docker run  -it  -v /home/user/Schreibtisch/spotDocker/spotify_sync_docker:/app  -v /home/user/Schreibtisch/tempp:/root/.config/spotify_sync -e EMAIL=downlod3rmusik@gmail.com -e PASSWORD=123456789987654321L0L123456789987654321L0L  -p 5678:5678  spotifysync:1.0.3/bin/bash
-# docker run  -it   -v /home/user/Schreibtisch/spotDocker/spotify_sync_docker:/app  -v /home/user/Schreibtisch/tempp:/root/.config/spotify_sync -e EMAIL=downlod3rmusik@gmail.com -e PASSWORD=123456789987654321L0L123456789987654321L0L  -p 5678:5678  spotifysync:1.0.3/bin/bash
-# docker run  -it  -v /home/user/Musik/configs/chrome_user_dir:/root/.config/chromium/ -v /home/user/Schreibtisch/spotDocker/spotify_sync_docker:/app  -v /home/user/Musik/configs/spotify_sync:/root/.config/spotify_sync -v /home/user/Musik/dir:/music -e EMAIL=downlod3rmusik@gmail.com -e PASSWORD=123456789987654321L0L  -p 5678:5678  spotifysync:1.0.88 /bin/bash
+# docker run  -it  -v /home/user/Musik/configs/chrome_user_dir:/root/.config/chromium/ -v /home/user/Schreibtisch/spotDocker/spotify_sync_docker:/app  -v /home/user/Musik/configs/spotify_sync:/root/.config/spotify_sync -v /home/user/Musik/music:/music -e EMAIL=downlod3rmusik@gmail.com -e PASSWORD=123456789987654321L0L  -p 5678:5678  spotifysync:1.0.88 /bin/bash
+
+
+
+#docker run  -it   -v /home/user/Schreibtisch/spotDocker/spotify_sync_docker:/app  -v /home/user/Musik/configs/spotify_sync/profiles:/root/.config/spotify_sync -v /home/user/Musik/configs/spotify_sync/cache:/root/.local/share/spotify_sync -v /home/user/Musik/music:/music -p 5678:5678  spotifysync:3.0.0 /bin/bash
 #docker build  -t spotifysync:0.8.2 "." --no-cache
 #docker remove: docker rm -f $(docker ps -a -q)
 #

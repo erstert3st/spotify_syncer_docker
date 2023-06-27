@@ -19,6 +19,7 @@ from apiclient.http import MediaFileUpload
 # Import our folder uploading script
 # import initial_upload
 
+#TODO make Ooc
 # If modifying these scopes, delete your previously saved credentials
 # at ~/.credentials/drive-python-quickstart.json
 SCOPES = ['https://www.googleapis.com/auth/drive.metadata.readonly',
@@ -28,7 +29,7 @@ CLIENT_SECRET_FILE = os.getenv("CLIENT_SECRET_FILE","/home/user/Schreibtisch/spo
 APPLICATION_NAME = 'Drive Sync'
 
 # Declare full path to folder and folder name
-FULL_PATH = os.getenv("BASE_PATH","/test")
+FULL_PATH = os.getenv("BASE_PATH","/home/user/Musik/music")
 #DIR_NAME = 'PUT YOUR FOLDER NAME HERE'
 # Or simply
 DIR_NAME = FULL_PATH.split('/')[-1]

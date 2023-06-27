@@ -24,4 +24,4 @@ def get_flaccs():
 get_flaccs()
 
 
-#docker run  -it  -v /home/user/Schreibtisch/spotDocker/spotify_sync_docker:/app  -v /home/user/Schreibtisch/tempp:/root/.config/spotify_sync  -v /home/user/Musik/dir:/music -p 5678:5678  -p 9090:9090 -p 9222:9222 spotifysync:0.8.4 /bin/bash
+#docker run  -it  -v /home/user/Schreibtisch/spotDocker/spotify_sync_docker:/app  -v /home/user/Schreibtisch/tempp:/root/.config/spotify_sync  -v /home/user/Musik/music:/music -p 5678:5678  -p 9090:9090 -p 9222:9222 spotifysync:0.8.4 /bin/bash

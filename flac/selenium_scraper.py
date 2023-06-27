@@ -336,7 +336,7 @@ class selenium_scraper(object):
         return True
 if __name__ == "__main__":
      print("start")
-     fetcher = selenium_scraper("/home/user/Musik/dir/TEMP","db")
+     fetcher = selenium_scraper("/home/user/Musik/music/TEMP","db")
      #fetcher.login_google("https://accounts.spotify.com/authorize?client_id=33bbbfe2ba9a486ebd39ff4db06c689d&response_type=code&redirect_uri=http%3A%2F%2F127.0.0.1%3A9090&code_challenge_method=S256&code_challenge=injfBYkw9jRd8CBtKrWoagEC-Vr2mz-TVgHJKCBrpQ8&scope=+playlist-read-collaborative++playlist-read-private+user-library-read")
      HI =fetcher.login_google()
      print(HI)

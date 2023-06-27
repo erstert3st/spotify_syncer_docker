@@ -7,6 +7,7 @@ from pydub import AudioSegment
 from pydub.exceptions import CouldntDecodeError
 from .custom_except import captcha_solved_except
 
+
 #0 = new
 #1 = downloaded
 #2 = copy done
@@ -30,12 +31,12 @@ class Flacer(object):
         #Make Vars Maybe change that with DockerVars!
         print("run test:" + str(run_test))
         self.captcha_solved= False
-        self.base_path = os.getenv("BASE_PATH","/home/user/Musik/dir")
+        self.base_path = os.getenv("BASE_PATH","/home/user/Musik/music")
         print(self.base_path)
         self.mp3_folder =  os.path.join(self.base_path , "MP3")
         self.flac_folder = os.path.join(self.base_path ,"FLAC")
         self.temp_download = os.path.join(self.base_path ,"TEMP")
-        #'/home/user/Musik/dir/MP3/Test  (6jbF)/Vial - Mr. Fuck You'        
+        #'/home/user/Musik/music/MP3/Test  (6jbF)/Vial - Mr. Fuck You'        
         #get music files compare new/existing
 
 
@@ -84,7 +85,8 @@ class Flacer(object):
            
             else:
                 #debug:
-                self.download_flacs(['/home/user/Musik/dir/MP3/liked  (like)/Metallica - Fuel.mp3'],run_test)
+                path = os.getenv("BASE_PATH","/home/user/Musik/music")
+                self.download_flacs([path+'/MP3/liked  (like)/Metallica - Fuel.mp3'],run_test)
 
         except captcha_solved_except:
             print("second Captcha found wait till next execution")
@@ -188,6 +190,8 @@ class Flacer(object):
 
     def download_flacs(self,file_paths,run_test=False):
         from .selenium_scraper import selenium_scraper
+        import threading
+
         path = ""
         try:   #9222
             scraper = self.selenium_scraper(self.temp_download,"db")
@@ -218,7 +222,7 @@ class Flacer(object):
             
             if run_test is False: 
                 self.copy_check_flac(self,path,True)
-                self.new_files = True 
+
 
         except:
             raise Exception

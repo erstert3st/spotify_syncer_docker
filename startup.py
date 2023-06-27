@@ -22,8 +22,11 @@ def build_spotify():
     app.authorize_spotify()
     print("logins spotify done")
 
-def build_syncer():
-    
+def sync_check_file_changed():
+    print("syncer check if files changed")
+    while True:
+        Syncer.check_for_new_files(True)
+    print("syncer checker done")
 
 def sync_google_drive():
     print("google drive sync start:")
@@ -32,12 +35,12 @@ def sync_google_drive():
 def startup_flacer():
     global flacer_run
     if flacer_run is False:
-        flacer_run  = True
-        
+        flacer_run  = True   
         try:
             flacer = Flacer() 
             print("startflacer")
             flacer.main()
+            sync_check_file_changed()
         except Exception as e:
             print("Error occurred:", e)
             print("flaccer error")
@@ -51,7 +54,9 @@ def startup_spotify():
         try:
             #app.authorize_spotify()
             #app.authorize_spotify()
-            try:app.auto()
+            try:
+                app.auto()
+                sync_check_file_changed()
             except:app.authorize_spotify()
         except Exception as e:
             print("Error occurred:", e)
@@ -62,7 +67,7 @@ def startup_spotify():
 def run_test():
     pytest.main([ '-s', 'py_test.py'])
 def main():
-   
+    if len(os.getenv("RUN_TEST","")) >= 1:run_test()
     sync_google_drive()
     build_flacer()
     build_spotify()
@@ -80,7 +85,7 @@ def main():
         schedule.run_pending()
         time.sleep(1)
 if __name__ == "__main__":
-    run_test()
+    sync_check_file_changed()
     #  os.environ["CONFIG_PROFILE"] = "myFirstProfile"
     #  os.environ["MANUAL_CONFIG_FILE"] = "/home/user/Schreibtisch/spotDocker/spotify_sync_docker/config.json"
     #  build_spotify()

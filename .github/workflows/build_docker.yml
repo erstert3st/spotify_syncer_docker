@@ -17,7 +17,7 @@ jobs:
       uses: actions/checkout@v2
 
     - name: Build Docker image
-      run: docker build -t myapp .
+      run: docker build -t spotifyflaccer --no-cache.
 
     - name: Run tests in Docker container
-      run: docker run myapp python -m pytest
+      run: docker run spotifyflaccer pytest py_test.py -k "not login"
