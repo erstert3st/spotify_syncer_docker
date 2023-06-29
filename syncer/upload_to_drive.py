@@ -25,7 +25,7 @@ from apiclient.http import MediaFileUpload
 SCOPES = ['https://www.googleapis.com/auth/drive.metadata.readonly',
           'https://www.googleapis.com/auth/drive.file',
           'https://www.googleapis.com/auth/drive']
-CLIENT_SECRET_FILE = os.getenv("CLIENT_SECRET_FILE","/home/user/Schreibtisch/spotDocker/spotify_sync_docker/drive/client_secret.json")  
+CLIENT_SECRET_FILE = os.getenv("CLIENT_SECRET_FILE","/home/user/Schreibtisch/spotDocker/spotify_sync_docker/syncer/client_secret.json")  
 APPLICATION_NAME = 'Drive Sync'
 
 # Declare full path to folder and folder name
@@ -146,12 +146,9 @@ def get_credentials():
     Returns:
         Credentials, the obtained credential.
     """
-    home_dir = os.path.expanduser('~')
-    credential_dir = os.path.join(home_dir, '.credentials')
-    if not os.path.exists(credential_dir):
-        os.makedirs(credential_dir)
-    credential_path = os.path.join(credential_dir,
-                                   'drive-python-sync.json')
+    home_dir = os.getenv("$BASE_PATH","/home/user/Schreibtisch/spotDocker/spotify_sync_docker")
+    credential_dir = os.path.join(home_dir, 'test')
+    credential_path = os.path.join(credential_dir,'drive-python-sync.json')
 
     store = Storage(credential_path)
     credentials = store.get()
@@ -390,4 +387,4 @@ def main():
         service.files().delete(fileId=folder_id).execute()
 
 if __name__ == '__main__':
-    main()
+    get_credentials()

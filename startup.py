@@ -22,15 +22,9 @@ def build_spotify():
     app.authorize_spotify()
     print("logins spotify done")
 
-def sync_check_file_changed():
-    print("syncer check if files changed")
-    while True:
-        Syncer.check_for_new_files(True)
-    print("syncer checker done")
-
-def sync_google_drive():
+def sync_google_drive(check_file_changed):
     print("google drive sync start:")
-    Syncer.main()
+    Syncer.main_syncer(check_file_changed)
     print("google drive sync Done!")
 def startup_flacer():
     global flacer_run
@@ -40,7 +34,7 @@ def startup_flacer():
             flacer = Flacer() 
             print("startflacer")
             flacer.main()
-            sync_check_file_changed()
+            sync_google_drive(True)
         except Exception as e:
             print("Error occurred:", e)
             print("flaccer error")
@@ -53,10 +47,10 @@ def startup_spotify():
         app = SpotifySyncApp()
         try:
             #app.authorize_spotify()
-            #app.authorize_spotify()
+            app.authorize_spotify() #Todo do you need it ? 
             try:
                 app.auto()
-                sync_check_file_changed()
+                sync_google_drive(True)
             except:app.authorize_spotify()
         except Exception as e:
             print("Error occurred:", e)
@@ -66,6 +60,8 @@ def startup_spotify():
 
 def run_test():
     pytest.main([ '-s', 'py_test.py'])
+
+
 def main():
     if len(os.getenv("RUN_TEST","")) >= 1:run_test()
     sync_google_drive()
@@ -78,6 +74,7 @@ def main():
     schedule.every(1).minute.do(Thread(target=startup_spotify()).start())
     schedule.every(3).hours.do(Thread(target=startup_flacer()).start())
     schedule.every(12).hours.do(Thread(target=sync_google_drive()).start())
+    schedule.every(24).hours.do(Thread(target=sync_google_drive(False)).start())
     #schedule.every(10).minutes.do(ten_minute_task)
 
     # Keep the script running

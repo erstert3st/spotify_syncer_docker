@@ -1,15 +1,25 @@
-from  upload_to_drive import main as main_syncer 
+from  .upload_to_drive import main as upload_syncer 
 import os 
-
+    
 
 class Syncer():
 #better than os change path shit
-    
-    def main_pfusch():
-        main_syncer()
+    syncer_run = False
+    def main_syncer(check_file_changed=True):
+        global syncer_run
+        if syncer_run is False:
+            syncer_run  = True  
+            file_changed = True
+            try:
+                print("start uploud syncer")
+                if check_file_changed is True: file_changed = upload_syncer()
+                if file_changed is True: upload_syncer()
+            except Exception as e:
+                print("Error occurred:", e)
+                print("flaccer error")
+        syncer_run = False
 
-
-    def check_for_new_files(update_google_drive=True):
+    def check_for_new_files():
         previous_state = set()
         file_list = os.getenv("BASE_PATH","/home/user/Musik/music") + "/file_list.txt"
         file_list_path = os.getenv("BASE_PATH","/home/user/Musik/music")
@@ -25,13 +35,13 @@ class Syncer():
 
         new_files = current_state - previous_state
 
+        with open(file_list, 'w') as file:
+            file.write('\n'.join(current_state))
         if new_files:
             # Run your desired function here
             print("New files detected:", new_files)
-            main_syncer()
-
-        with open(file_list, 'w') as file:
-            file.write('\n'.join(current_state))
+            return True
+        return False
 
 if __name__ == '__main__':
     while True:

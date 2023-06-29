@@ -48,17 +48,22 @@ class Flacer(object):
         #Todo Test
         flac_files_name =  list(set([os.path.basename(path) for path in flac_files]))
 
-        file_list_exist ,file_list_duplicat,file_list_new = [],[],[]
+        file_list_exist ,file_list_duplicat,file_list_new,file_name_duplicate_check = [],[],[],[]
 
 
         for mp3_file in mp3_files:
             flac_file_name =  mp3_file[:-7].replace("/MP3/", "/FLAC/") + ".flac"
+            file_name_only = os.path.basename(flac_file_name)
 
+            #already done
             if flac_file_name in flac_files:
                 file_list_exist.append(mp3_file)
-            elif os.path.basename(flac_file_name) in flac_files_name:
+            #duplicate copy is enough 
+            elif file_name_only in flac_files_name:
                 file_list_duplicat.append(mp3_file)
-            else:
+            #if file is not already in list add it if is in list the duplicate will handle it next time
+            elif file_name_only not in file_name_duplicate_check:             
+                file_name_duplicate_check.append(file_name_only)
                 file_list_new.append(mp3_file)
         # may remove 
         with open(self.mp3_folder + "/flacer_list.txt", "r") as file:
@@ -79,21 +84,21 @@ class Flacer(object):
         print(run_test)
         try:
             if run_test is False:
-                if len(file_list_duplicat) > 0 : self.copy_duplicate(file_list_duplicat)           
+                if len(file_list_duplicat) > 0 : self.copy_duplicate(file_list_duplicat,flac_files) #          
             
                 if len(file_list_new) > 0 : self.download_flacs(download_flacer_list)
            
             else:
                 #debug:
                 path = os.getenv("BASE_PATH","/home/user/Musik/music")
+                print(path+'/MP3/liked  (like)/Metallica - Fuel.mp3')
                 self.download_flacs([path+'/MP3/liked  (like)/Metallica - Fuel.mp3'],run_test)
 
         except captcha_solved_except:
             print("second Captcha found wait till next execution")
             #Todo test 
-            exit(0)
         except:
-            exit(1)
+            raise Exception
         return True
     
     def copy_duplicate(self, destinations,flac_files):
@@ -102,7 +107,7 @@ class Flacer(object):
             #Todo learn that loop 
             flac= os.path.basename(destination[:-7])+ ".flac"
             #destination_flac=    os.path.dirname(destination).replace("/MP3/","/FLAC/") + "/"+ flac
-            source_path = [text for text in flac_files if flac in text]            
+            source_path = [flacs for flacs in flac_files if flac in flacs]            
             self.copy_flac_file(destination,source_path[0])
     
     def copy_flac_file(self,dest,source=""):
@@ -111,9 +116,13 @@ class Flacer(object):
         if not os.path.exists(dest_path):
             os.makedirs(dest_path)
             #self.copyOtherFiles(path,folder)
-        flacs = source if len(source)> 1 else  self.get_all_files(self.temp_download)[0]
+        # if source is not give check donwload folder - so it can handle duplicate files! 
+        flacs = source if len(source)> 1 else  self.get_all_files(self.temp_download)[0] 
         dest_file_name = dest_path + "/" + os.path.basename(dest)[:-7] + ".flac"
-        shutil.copy2(flacs,dest_file_name)
+        print("copy_flac_file -> start copy")
+        if self.check_flac(flacs) is True:
+            shutil.copy2(flacs,dest_file_name)
+            print("copy_flac_file -> finished copy")
         self.flac_file=dest_file_name
 
 
@@ -151,17 +160,13 @@ class Flacer(object):
     def check_flac(self,path):
         try:
             audio = AudioSegment.from_file(path, format="flac")
+            print(path + " is valid" )
             return True
         except CouldntDecodeError:
-            print("FLAC file is not valid or cannot be played.")
+            print(path + " FLAC file is not valid or cannot be played.")
             return False
     
 
-
-    def copy_check_flac(self,source,flac=""):
-        self.flac_file = flac
-        self.copy_flac_file(source,flac)
-        self.flac_file = ""
    #need ?      ##time.sleep(random.randint(45,60))
     
     def remove_folder_contents(self,path):
@@ -212,16 +217,20 @@ class Flacer(object):
                     else:
                         del self.counter
                         raise Exception
-
+                print("flacer -> try to copy file")
                 for i in range(0, 25):
                     flac_file = self.get_all_files(self.temp_download,ends_with=".flac")
-                    if(len(flac_file) > 0) :break
+                    if len(flac_file) > 0 :
+                        break
                     time.sleep(2)
                     if i == 25: raise Exception
             #
             
-            if run_test is False: 
-                self.copy_check_flac(self,path,True)
+                if run_test is False: 
+                    print("flacer -> copy file")
+                    self.flac_file = path
+                    self.copy_flac_file(path,flac_file[0])
+                    self.flac_file = ""
 
 
         except:

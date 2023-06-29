@@ -1,4 +1,4 @@
-FROM debian:latest
+FROM debian:stable-slim
 
 ENV CHROME_USR_DIR="/config"
 #ENV CHROME_USR_DIR="/root/.config/chromium/"
@@ -13,7 +13,7 @@ ENV EMAIL=""
 ENV PASSWORD=""
 ENV CONFIG_PROFILE="myFirstProfile"
 ENV MANUAL_CONFIG_FILE="/app/config.json"
-ENV CLIENT_SECRET_FILE="app/syncer/client_secret.json"
+ENV CLIENT_SECRET_FILE="/app/syncer/client_secret.json"
 ENV RUN_TEST="True"
 #9090 = spotify 9222-3 debug chrome  5678 debug code
 EXPOSE 9090 
@@ -21,31 +21,27 @@ EXPOSE 9223
 EXPOSE 9222
 EXPOSE 5678
 
-
-RUN apt-get update && apt-get install   nano ffmpeg python3-full pip chromium xvfb curl -yqq
+#RUN apt-get update && apt-get install nano ffmpeg python3-full pip chromium xvfb curl --no-install-recommends -yqq
+RUN apt-get update && apt-get install nano ffmpeg python3-full pip chromium xvfb curl  --no-install-recommends -yqq
 RUN mkdir -p /music/MP3 /music/TEMP /app /root/.config/spotify_sync /config
 
-
 COPY . /app
-
 WORKDIR /app
-#RUN test -f /app/syncer/client_secret.json && echo "client_secret exists" || echo "client_secret does not exist" && exit 1
 
-RUN chmod +x startup.sh
+
 # install spot_sync from requirements 
 #Todo remove unnecesarry installs
-RUN pip install --no-cache-dir --upgrade pip  --break-system-packages
-RUN pip install --no-cache-dir Poetry --break-system-packages
-RUN poetry install
-RUN pip install .  --break-system-packages
-RUN pip install -r /app/flac/requirements.txt --break-system-packages
+RUN pip3 install --no-cache-dir --upgrade pip  --break-system-packages
+RUN pip3 install -r /app/flac/requirements.txt --no-cache-dir --break-system-packages
+RUN pip3 install . --no-cache-dir --break-system-packages
+#RUN poetry install
 
 #poetry cleanup
 #RUN pip3 install . 
 WORKDIR /
 
 RUN rm /usr/local/lib/python3.11/dist-packages/spotipy/oauth2.py -rf
-#COPY /test/oauth2.py /usr/local/lib/python3.11/dist-packages/spotipy/oauth2.py
+#COPY test/oauth2.py /usr/local/lib/python3.11/dist-packages/spotipy/oauth2.py
 COPY /test/oauth2.py  /usr/local/lib/python3.11/dist-packages/spotipy/oauth2.py
 #COPY test/oauth2.py ./root/.cache/pypoetry/virtualenvs/spot-sync-9TtSrW0h-py3.9/lib/python3.9/site-packages/spotipy/oauth2.py
 WORKDIR /app
@@ -59,6 +55,11 @@ RUN pip cache purge
 CMD ["python3", "startup.py"]
 #CMD ["python3", "py_test.py","-s","-v"]
 #CMD ["/bin/bash"]
+
+
+#
+#TODO newer Python version may alpine version
+#TODO set env vars in python and remove startuo.sh
 
 
 

@@ -240,7 +240,7 @@ class selenium_scraper(object):
             return True
 
         while error_info is False:
-            print("find_solve_captcha -> captcha found")
+            print("find_solve_captcha -> captcha found!!!")
             time.sleep(3)
             audio_url = self.browser.find_elements(By.CLASS_NAME, "rc-audiochallenge-tdownload-link")[0].get_attribute('href')
             time.sleep(1) 
@@ -260,7 +260,9 @@ class selenium_scraper(object):
             time.sleep(10)        
             error_element = ""
             error_element = self.browser.find_elements(By.CSS_SELECTOR,"#rc-audio > div.rc-audiochallenge-error-message")
+            print("find_solve_captcha -> captcha solved!!!")
             if len(error_element) > 0 and error_element[0].text == "Multiple correct solutions required - please solve more.":
+                print("find_solve_captcha -> second captcha needed solved!!!")
                 error_info = True
                 self.browser.switch_to.default_content()
                 self.find_solve_captcha(iframe)
@@ -276,9 +278,12 @@ class selenium_scraper(object):
         for x in range(1, 2):     
             captcha_search =  self.browser.find_elements(selectorType,selector)
             if len(captcha_search) > 0:             
-                return self.find_solve_captcha(captcha_search[0],dry_run)
+                captchaReturn = self.find_solve_captcha(captcha_search[0],dry_run)
+                self.browser.switch_to.default_content()
+                return captchaReturn
                 break
             #   catch b  captchaLock! 
+        self.browser.switch_to.default_content()
         return False
 
     def search_click(self,search,selector, querry,button=""):
@@ -324,15 +329,17 @@ class selenium_scraper(object):
         if len(captcha) > 0: 
             self.click_wait(element=captcha[0],timer=5)
             #Handle second Captcha!
-            self.captcha_check(By.CSS_SELECTOR,"body > div:nth-child(13) > div:nth-child(4) > iframe",dry_run=True)
+            captcha_found = self.captcha_check(By.CSS_SELECTOR,"body > div:nth-child(13) > div:nth-child(4) > iframe",dry_run=True)
             print("captcha dry run")
-            self.captcha_solved_checker = self.captcha_check(By.CSS_SELECTOR,"body > div:nth-child(13) > div:nth-child(4) > iframe")
+            if captcha_found is True: # Todo captcha handler more flexi
+                print("captcha dry run -> found")
+                self.captcha_solved_checker = self.captcha_check(By.CSS_SELECTOR,"body > div:nth-child(13) > div:nth-child(4) > iframe")
             print("captcha done -> default content")
-            self.browser.switch_to.default_content()
 
-        print("captcha done start download")
+        print("start download")
         self.click_wait(selectorType=By.TAG_NAME,selector="button",timer=3)
         time.sleep(25)
+        print("download should be finished") # Todo check if file is done
         return True
 if __name__ == "__main__":
      print("start")
