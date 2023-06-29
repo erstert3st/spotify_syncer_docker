@@ -22,7 +22,7 @@ EXPOSE 9222
 EXPOSE 5678
 
 #RUN apt-get update && apt-get install nano ffmpeg python3-full pip chromium xvfb curl --no-install-recommends -yqq
-RUN apt-get update && apt-get install nano ffmpeg python3-full pip chromium xvfb curl  --no-install-recommends -yqq
+RUN apt-get update && apt-get install ffmpeg python3-dev pip chromium xvfb gcc  --no-install-recommends -yqq
 RUN mkdir -p /music/MP3 /music/TEMP /app /root/.config/spotify_sync /config
 
 COPY . /app

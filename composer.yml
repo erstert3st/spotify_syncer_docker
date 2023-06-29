@@ -1,0 +1,15 @@
+---
+version: "1.0"
+services:
+  spotify_sync:
+    image: spotify_sync:latest
+    container_name: spotify_syncer
+    volumes:
+      - /mnt/ssd/media/config//spotify_sync/remove_me:/app
+      - /mnt/ssd/media/config/spotify_sync/profiles:/root/.config/spotify_sync
+      - /mnt/ssd/media/config/spotify_sync/cache:/root/.local/share/spotify_sync
+      - /mnt/ssd/media/music/downloader:/music
+    ports:
+      - 5678:5678
+      - 9090:9090
+    restart: unless-stopped

@@ -64,17 +64,17 @@ def run_test():
 
 def main():
     if len(os.getenv("RUN_TEST","")) >= 1:run_test()
-    sync_google_drive()
+    #sync_google_drive()
     build_flacer()
     build_spotify()
     print("startup")
     #Todo : Make flacer as modul 
     #Todo : all other Todos :P
     #schedule.every().day.at("16:30").do(daily_task)
-    schedule.every(1).minute.do(Thread(target=startup_spotify()).start())
+    schedule.every(5).minute.do(Thread(target=startup_spotify()).start())
     schedule.every(3).hours.do(Thread(target=startup_flacer()).start())
-    schedule.every(12).hours.do(Thread(target=sync_google_drive()).start())
-    schedule.every(24).hours.do(Thread(target=sync_google_drive(False)).start())
+   # schedule.every(12).hours.do(Thread(target=sync_google_drive()).start())
+   # schedule.every(24).hours.do(Thread(target=sync_google_drive(False)).start())
     #schedule.every(10).minutes.do(ten_minute_task)
 
     # Keep the script running
@@ -82,7 +82,7 @@ def main():
         schedule.run_pending()
         time.sleep(1)
 if __name__ == "__main__":
-    sync_check_file_changed()
+    main()
     #  os.environ["CONFIG_PROFILE"] = "myFirstProfile"
     #  os.environ["MANUAL_CONFIG_FILE"] = "/home/user/Schreibtisch/spotDocker/spotify_sync_docker/config.json"
     #  build_spotify()

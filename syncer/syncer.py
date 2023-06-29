@@ -13,7 +13,8 @@ class Syncer():
             try:
                 print("start uploud syncer")
                 if check_file_changed is True: file_changed = upload_syncer()
-                if file_changed is True: upload_syncer()
+                if file_changed is True: 
+                    upload_syncer()
             except Exception as e:
                 print("Error occurred:", e)
                 print("flaccer error")
