@@ -16,9 +16,10 @@ def main_syncer(force=False):
                     print("BASE_PATH should be not ''")
                     raise Exception
                 command = "rclone sync "+ os.getenv("BASE_PATH") +" drive:music"
+                
                 print(command)
-                #process = subprocess.Popen(command, shell=True)
-                #process.wait()
+                process = subprocess.Popen(command, shell=True)
+                process.wait()
         except Exception as e:
             print("Error occurred:", e)
 
