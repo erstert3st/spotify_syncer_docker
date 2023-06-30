@@ -1,5 +1,6 @@
 from tendo import singleton
 import os
+import subprocess
 
 def main_syncer(force=False):
         file_changed = False
@@ -10,15 +11,21 @@ def main_syncer(force=False):
                           
             if force is True or file_changed is True: 
                 print("file changed start upload:")
-                ##
-                #
+                path = os.getenv("BASE_PATH","") + "/file_list.txt"
+                if len(path) <=15:
+                    print("BASE_PATH should be not ''")
+                    raise Exception
+                command = "rclone sync "+ os.getenv("BASE_PATH") +" drive:music"
+                print(command)
+                #process = subprocess.Popen(command, shell=True)
+                #process.wait()
         except Exception as e:
             print("Error occurred:", e)
 
 def check_for_new_files():
     previous_state = set()
-    file_list = os.getenv("BASE_PATH","/home/user/Musik/music") + "/file_list.txt"
-    file_list_path = file_list + "/file_list.txt"
+    file_list_path = os.getenv("BASE_PATH","/home/user/Musik/music") 
+    file_list = file_list_path + "/file_list.txt"
     
     if os.path.exists(file_list):
         with open(file_list, 'r') as file:

@@ -8,7 +8,7 @@ services:
       - /mnt/ssd/media/config//spotify_sync/remove_me:/app
       - /mnt/ssd/media/config/spotify_sync/profiles:/root/.config/spotify_sync
       - /mnt/ssd/media/config/spotify_sync/cache:/root/.local/share/spotify_sync
-      - /mnt/ssd/media/music/downloader:/music
+      - /mnt/ssd/media/music/music:/music
     ports:
       - 5678:5678
       - 9090:9090

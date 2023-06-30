@@ -34,7 +34,6 @@ def startup_flacer():
             flacer = Flacer() 
             print("startflacer")
             flacer.main()
-            sync_google_drive(True)
         except Exception as e:
             print("Error occurred:", e)
             print("flaccer error")
@@ -50,7 +49,9 @@ def startup_spotify():
             app.authorize_spotify() #Todo do you need it ? 
             try:
                 app.auto()
-                sync_google_drive(True)
+                if Syncer.check_for_new_files() is True:
+                    print("new Files found start flaccer")
+                    Flacer.main()
             except:app.authorize_spotify()
         except Exception as e:
             print("Error occurred:", e)
