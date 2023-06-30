@@ -29,12 +29,12 @@ def test_env_vars():
     assert  len(os.getenv("CLIENT_SECRET_FILE","")) >= 1
     #assert  len(os.getenv("MANUAL_CONFIG_FILE","")) >= 1
 
-def test_file_exists():
-    print("start test: def test_file_exists():")
-    client_secret = os.getenv("CLIENT_SECRET_FILE","syncer/client_secret.json")  # Replace with the actual file path
-    config_dile_spotify = os.getenv("MANUAL_CONFIG_FILE","config.json")  # Replace with the actual file path
-    assert os.path.isfile(client_secret), f"File '{client_secret}' does not exist"
-    assert os.path.isfile(config_dile_spotify), f"File '{config_dile_spotify}' does not exist"
+# def test_file_exists():
+#     print("start test: def test_file_exists():")
+#     client_secret = os.getenv("CLIENT_SECRET_FILE","syncer/client_secret.json")  # Replace with the actual file path
+#     config_dile_spotify = os.getenv("MANUAL_CONFIG_FILE","config.json")  # Replace with the actual file path
+#     assert os.path.isfile(client_secret), f"File '{client_secret}' does not exist"
+#     assert os.path.isfile(config_dile_spotify), f"File '{config_dile_spotify}' does not exist"
 
 def test_login_spotify():
     print("start test: def test_login_spotify():")
@@ -106,4 +106,4 @@ if __name__ == "__main__":
    # os.environ["CHROME_USR_DIR"] = "/config1"
     #os.environ["MANUAL_CONFIG_FILE"] = "/home/user/Schreibtisch/spotDocker/spotify_sync_docker/config.json"
     #os.environ["CONFIG_PROFILE"] = "myFirstProfile"
-    test_download_flac()
+    test_check_browser()

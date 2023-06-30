@@ -164,8 +164,8 @@ class selenium_scraper(object):
             vdisplay.start()
             #self.disp = Display(backend="xvnc",size=(100, 60),color_depth=24 ,rfbport=2020)
            # self.disp.start()
-        else: options.binary_location = "/usr/bin/chromium-browser"
-        print(options.binary_location)
+       # else: options.binary_location = "/usr/bin/chromium-browser"
+       # print(options.binary_location)
        # options.add_argument('--disable-gpu')
         #options.add_argument("--no-sandbox")
         #self.options.add_argument("-user-agent='"+self.ua+"'")

@@ -33,6 +33,7 @@ WORKDIR /app
 #Todo remove unnecesarry installs
 RUN pip3 install --no-cache-dir --upgrade pip  --break-system-packages
 RUN pip3 install -r /app/flac/requirements.txt --no-cache-dir --break-system-packages
+RUN python3 setup.py install
 RUN pip3 install . --no-cache-dir --break-system-packages
 #RUN poetry install
 

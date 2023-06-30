@@ -1,5 +1,4 @@
 command
-undetected_chromedriver
 selenium
 xvfbwrapper
 SpeechRecognition
