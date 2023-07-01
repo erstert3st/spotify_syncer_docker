@@ -1,4 +1,4 @@
-FROM debian:stable-slim
+FROM debian:stable
 
 ENV CHROME_USR_DIR="/config"
 #ENV CHROME_USR_DIR="/root/.config/chromium/"
@@ -14,7 +14,8 @@ ENV PASSWORD=""
 ENV CONFIG_PROFILE="myFirstProfile"
 ENV MANUAL_CONFIG_FILE="/app/config.json"
 ENV CLIENT_SECRET_FILE="/app/syncer/client_secret.json"
-ENV RUN_TEST="True"
+ENV CHROMEDRIVER_PATH="/app/test/chromedriver"
+ENV RUN_TEST=""
 #9090 = spotify 9222-3 debug chrome  5678 debug code
 EXPOSE 9090 
 EXPOSE 9223
@@ -22,7 +23,7 @@ EXPOSE 9222
 EXPOSE 5678
 
 #RUN apt-get update && apt-get install nano ffmpeg python3-full pip chromium xvfb curl --no-install-recommends -yqq
-RUN apt-get update && apt-get install ffmpeg python3-dev pip chromium xvfb gcc  --no-install-recommends -yqq
+RUN apt-get update && apt-get install nano  ffmpeg python3-dev pip chromium  xvfb gcc  --no-install-recommends -yqq
 RUN mkdir -p /music/MP3 /music/TEMP /app /root/.config/spotify_sync /config
 
 COPY . /app
@@ -33,7 +34,6 @@ WORKDIR /app
 #Todo remove unnecesarry installs
 RUN pip3 install --no-cache-dir --upgrade pip  --break-system-packages
 RUN pip3 install -r /app/flac/requirements.txt --no-cache-dir --break-system-packages
-RUN python3 setup.py install
 RUN pip3 install . --no-cache-dir --break-system-packages
 #RUN poetry install
 
