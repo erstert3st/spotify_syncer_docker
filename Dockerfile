@@ -36,6 +36,7 @@ RUN pip3 install --no-cache-dir --upgrade pip
 RUN pip3 install -r /app/flac/requirements.txt --no-cache-dir 
 RUN pip3 install . --no-cache-dir
 #RUN poetry install
+RUN apt-get update && apt-get install  --no-install-recommends -yqq chromium-chromedriver
 
 #poetry cleanup
 #RUN pip3 install . 

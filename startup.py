@@ -83,7 +83,7 @@ def main():
         schedule.run_pending()
         time.sleep(1)
 if __name__ == "__main__":
-    main()
-    #  os.environ["CONFIG_PROFILE"] = "myFirstProfile"
-    #  os.environ["MANUAL_CONFIG_FILE"] = "/home/user/Schreibtisch/spotDocker/spotify_sync_docker/config.json"
-    #  build_spotify()
+    #build_spotify()
+      os.environ["CONFIG_PROFILE"] = "myFirstProfile"
+      os.environ["MANUAL_CONFIG_FILE"] = "/home/user/Schreibtisch/spotDocker/spotify_sync_docker/config.json"
+      build_spotify()
