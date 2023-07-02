@@ -1,4 +1,4 @@
-FROM debian:stable
+FROM navikey/raspbian-bullseye
 
 ENV CHROME_USR_DIR="/config"
 #ENV CHROME_USR_DIR="/root/.config/chromium/"
@@ -23,7 +23,7 @@ EXPOSE 9222
 EXPOSE 5678
 
 #RUN apt-get update && apt-get install nano ffmpeg python3-full pip chromium xvfb curl --no-install-recommends -yqq
-RUN apt-get update && apt-get install nano  ffmpeg python3-dev pip chromium  xvfb gcc  --no-install-recommends -yqq
+RUN apt-get update && apt-get install  --no-install-recommends -yqq nano ffmpeg python3-dev pip chromium xvfb gcc
 RUN mkdir -p /music/MP3 /music/TEMP /app /root/.config/spotify_sync /config
 
 COPY . /app
@@ -32,9 +32,9 @@ WORKDIR /app
 
 # install spot_sync from requirements 
 #Todo remove unnecesarry installs
-RUN pip3 install --no-cache-dir --upgrade pip  --break-system-packages
-RUN pip3 install -r /app/flac/requirements.txt --no-cache-dir --break-system-packages
-RUN pip3 install . --no-cache-dir --break-system-packages
+RUN pip3 install --no-cache-dir --upgrade pip  
+RUN pip3 install -r /app/flac/requirements.txt --no-cache-dir 
+RUN pip3 install . --no-cache-dir
 #RUN poetry install
 
 #poetry cleanup
@@ -74,6 +74,6 @@ CMD ["python3", "startup.py"]
 #docker run  -it   -v /home/user/Schreibtisch/spotDocker/spotify_sync_docker:/app  -v /home/user/Musik/configs/spotify_sync/profiles:/root/.config/spotify_sync -v /home/user/Musik/configs/spotify_sync/cache:/root/.local/share/spotify_sync -v /home/user/Musik/music:/music -p 5678:5678  spotifysync:3.0.0 /bin/bash
 #docker build  -t spotifysync:0.8.2 "." --no-cache
 #docker remove: docker rm -f $(docker ps -a -q)
-#
+#docker run -it -v/home/pi/builder/spotify_sync_docker:/app  navikey/raspbian-bullseye
 #TODO newer Python version may alpine version
 #TODO set env vars in python and remove startuo.sh
