@@ -1,4 +1,4 @@
-FROM navikey/raspbian-bullseye
+FROM navikey/raspbian-buster
 
 ENV CHROME_USR_DIR="/config"
 #ENV CHROME_USR_DIR="/root/.config/chromium/"

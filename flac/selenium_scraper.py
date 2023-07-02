@@ -155,7 +155,7 @@ class selenium_scraper(object):
         if os.getenv("CHROME_USR_DIR") is not None:
            # chrome_exe_path = "/usr/bin/google-chrome"
             #options.binary_location = chrome_exe_path
-            options.binary_location = "/usr/bin/chromium"
+            options.binary_location = "/usr/bin/chromium-browser"
             #options.binary_location = "/usr/bin/brave-browser"
             options.add_argument("--user-data-dir="+ os.getenv("CHROME_USR_DIR"))
             options.arguments.extend(["--no-sandbox", "--disable-setuid-sandbox"]) 
