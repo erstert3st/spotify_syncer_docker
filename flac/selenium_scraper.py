@@ -8,8 +8,9 @@ from os import environ
 from selenium.webdriver.common.action_chains import ActionChains
 from selenium.webdriver.common.by import By
 from selenium.webdriver.support.select import Select
-from xvfbwrapper import Xvfb
+#from xvfbwrapper import Xvfb
 #from chromedriver_py import binary_path # this will get you the path variable
+from pyvirtualdisplay import Display
 
 import debugpy
 
@@ -159,9 +160,13 @@ class selenium_scraper(object):
             #options.binary_location = "/usr/bin/brave-browser"
             options.add_argument("--user-data-dir="+ os.getenv("CHROME_USR_DIR"))
             options.arguments.extend(["--no-sandbox", "--disable-setuid-sandbox"]) 
-            vdisplay = Xvfb(width= self.xy[0], height= self.xy[1], colordepth=16)
+            display = Display(visible=0, size=(1920, 1080))
+            display.start()
+            
+            
+            #vdisplay = Xvfb(width= self.xy[0], height= self.xy[1], colordepth=16)
            #  vdisplay = Xvfb(width=1500, height=730, colordepth=16)
-            vdisplay.start()
+            #vdisplay.start()
             #self.disp = Display(backend="xvnc",size=(100, 60),color_depth=24 ,rfbport=2020)
            # self.disp.start()
        # else: options.binary_location = "/usr/bin/chromium-browser"
@@ -174,7 +179,7 @@ class selenium_scraper(object):
        # options.add_argument("--headless=new")
        # options.add_argument("detach", True)
         #print("--load-extension="+os.getenv("UBLOCK_DIR","/home/user/Schreibtisch/SCRPPER/seleniumTest/uBlock0.chromium"))
-        options.add_argument("--load-extension="+os.getenv("UBLOCK_DIR","/home/user/Schreibtisch/SCRPPER/seleniumTest/uBlock0.chromium"))
+       # options.add_argument("--load-extension="+os.getenv("UBLOCK_DIR","/home/user/Schreibtisch/SCRPPER/seleniumTest/uBlock0.chromium"))
         #options.add_argument("--enable-logging= --v=1 > log.txt 2>&1")
         #options.add_argument("--enable-logging=stderr --v=1")
         options.add_argument("--profile-directory=Default")
