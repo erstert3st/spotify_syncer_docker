@@ -56,16 +56,16 @@ RUN pip3.9 install --no-cache-dir --upgrade pip
 RUN pip3.9 install -r /app/flac/requirements.txt --no-cache-dir 
 #RUN pip3.9 install . --no-cache-dir
 #RUN poetry install
-#RUN apt-get update && apt-get install  --no-install-recommends -yqq chromium-chromedriver
+RUN apt-get update && apt-get install  --no-install-recommends -yqq chromium-chromedriver
 
 #RUN pip3 install . 
-#WORKDIR /
+WORKDIR /
 
 RUN rm /usr/local/lib/python3.9/site-packages/spotipy/oauth2.py -rf
 #COPY test/oauth2.py /usr/local/lib/python3.11/dist-packages/spotipy/oauth2.py
 COPY test/oauth2.py  /usr/local/lib/python3.9/site-packages/spotipy/oauth2.py
 #COPY test/oauth2.py ./root/.cache/pypoetry/virtualenvs/spot-sync-9TtSrW0h-py3.9/lib/python3.9/site-packages/spotipy/oauth2.py
-#WORKDIR /app
+WORKDIR /app
 #poetry cleanup
 RUN apt clean -y
 RUN pip3.9 cache purge
