@@ -1,5 +1,5 @@
 #FROM navikey/raspbian-buster
-FROM navikey/raspbian-buster
+FROM python:1.0
 #FROM debian:stable
 
 ENV CHROME_USR_DIR="/config"
@@ -23,29 +23,30 @@ EXPOSE 9223
 EXPOSE 9222
 EXPOSE 5678
 
-#RUN apt-get update && apt-get install nano ffmpeg python3-full pip chromium xvfb curl --no-install-recommends -yqq
-RUN apt-get update 
-RUN apt-get upgrade -yqq
-RUN apt-get dist-upgrade -yqq
-# Install deb
-RUN  apt-get install  --no-install-recommends -yqq nano ffmpeg 
-RUN apt-get install   --no-install-recommends -yqq  chromium xvfb gcc  
-RUN mkdir -p /music/MP3 /music/TEMP /app /root/.config/spotify_sync /config
-
-# SETUP Python 3.9 
+COPY . /app
 WORKDIR /app
-# Install necessary dependencies
-RUN apt-get update && apt-get install -y build-essential  wget zlib1g-dev  libffi-dev  libssl-dev libsqlite3-dev
-# Download Python source code
-RUN wget https://www.python.org/ftp/python/3.9.15/Python-3.9.15.tgz && tar -xvf Python-3.9.15.tgz
-# Build and install Python
-RUN cd Python-3.9.15 && ./configure --enable-optimizations && make && make install
-# Clean up downloaded files
-RUN rm -rf Python-3.9.15 Python-3.9.15.tgz
 
+
+# install spot_sync from requirements 
+#Todo remove unnecesarry installs
+RUN pip3.9 install --no-cache-dir --upgrade pip  
+RUN pip3.9 install -r /app/flac/requirements.txt --no-cache-dir 
+#RUN pip3.9 install . --no-cache-dir
+#RUN poetry install
 RUN apt-get update && apt-get install  --no-install-recommends -yqq chromium-chromedriver
 
+#RUN pip3 install . 
+WORKDIR /
 
+RUN rm /usr/local/lib/python3.9/site-packages/spotipy/oauth2.py -rf
+#COPY test/oauth2.py /usr/local/lib/python3.11/dist-packages/spotipy/oauth2.py
+COPY test/oauth2.py  /usr/local/lib/python3.9/site-packages/spotipy/oauth2.py
+#COPY test/oauth2.py ./root/.cache/pypoetry/virtualenvs/spot-sync-9TtSrW0h-py3.9/lib/python3.9/site-packages/spotipy/oauth2.py
+WORKDIR /app
+#RUN python3 -c 'import startup; startup.build_flacer()'
+#RUN python3 -c 'import startup; startup.build_spotify()'
+#RUN poetry cache clear --all
+# cmd to run container at start
 CMD ["python3", "startup.py"]
 #CMD ["python3", "py_test.py","-s","-v"]
 #CMD ["/bin/bash"]
