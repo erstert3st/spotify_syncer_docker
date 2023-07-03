@@ -1,6 +1,8 @@
-FROM debian
+#FROM navikey/raspbian-buster
+FROM debian:stable
 
-ENV CHROME_USR_DIR="/root/.config/chromium/"
+ENV CHROME_USR_DIR="/config"
+#ENV CHROME_USR_DIR="/root/.config/chromium/"
 ENV	wait_time=10
 
 # set display port to avoid crash
@@ -8,74 +10,37 @@ ENV DISPLAY=:99
 ENV BASE_PATH="/music"
 ENV UBLOCK_DIR="/app/flac/uBlock0.chromium"
 ENV SELENIUM_CLASS_PATH="/app/flac/selenium_scraper.py"
-ENV EMAIL=""
-ENV PASSWORD=""
+ENV EMAIL="downlod3rmusik@gmail.com"
+ENV PASSWORD="123456789L0LxD"
 ENV CONFIG_PROFILE="myFirstProfile"
 ENV MANUAL_CONFIG_FILE="/app/config.json"
+ENV CLIENT_SECRET_FILE="/app/syncer/client_secret.json"
+ENV CHROMEDRIVER_PATH="/app/test/chromedriver"
+ENV RUN_TEST=""
 #9090 = spotify 9222-3 debug chrome  5678 debug code
 EXPOSE 9090 
 EXPOSE 9223
 EXPOSE 9222
 EXPOSE 5678
-#RUN apt-get -y update && apt-get install python3-full pip nano chromium ffmpeg xvfb wget unzip -yqq
-RUN apt-get -y update && apt-get install python3-full pip nano wget unzip -yqq
 
-RUN apt-get install chromium --no-install-recommends -y
 
-RUN mkdir -p /music/MP3 /music/TEMP /app /root/.config/spotify_sync
+RUN apt-get update 
+RUN  apt-get install  --no-install-recommends -yqq nano ffmpeg software-properties-common
+RUN apt-get install   --no-install-recommends -yqq  chromium xvfb gcc  python3-dev
 
-# Download Chromium zip file
-RUN wget -q --show-progress -O chromium.zip "https://www.googleapis.com/download/storage/v1/b/chromium-browser-snapshots/o/Linux_x64%2F1138798%2Fchrome-linux.zip?generation=1683087571068931&alt=media"
-
-# Unzip Chromium
-#RUN rm -rf /usr/bin/chromium
-RUN unzip chromium.zip -d /usr/bin/chromium2
-
-# Add Chromium to PATH
-ENV PATH="/usr/bin/chromium/chromium-linux:${PATH}"
-
+# SETUP Python 3.9 
 COPY . /app
 WORKDIR /app
-RUN chmod +x startup.sh
-# install spot_sync from requirements 
-#Todo remove unnecesarry installs
-RUN pip install --no-cache-dir --upgrade pip  --break-system-packages
-RUN pip install --no-cache-dir Poetry --break-system-packages
-RUN poetry install
-RUN pip install .  --break-system-packages
-RUN pip install -r /app/flac/requirements.txt --break-system-packages
+# Install necessary dependencies
+RUN  apt-get install -y build-essential  wget zlib1g-dev  libffi-dev  libssl-dev libsqlite3-dev
+# Download Python source code
+RUN wget https://www.python.org/ftp/python/3.9.15/Python-3.9.15.tgz && tar -xvf Python-3.9.15.tgz
+# Build and install Python
+RUN cd Python-3.9.15 && ./configure --enable-optimizations && make && make install
+# Clean up downloaded files
+#RUN rm -rf Python-3.9.15 Python-3.9.15.tgz
+# Verify Python installation
+#RUN python --version
 
-#poetry cleanup
-#RUN pip3 install . 
-WORKDIR /
-
-RUN rm /usr/local/lib/python3.11/dist-packages/spotipy/oauth2.py -rf
-COPY /test/oauth2.py /usr/local/lib/python3.11/dist-packages/spotipy/oauth2.py
-####COPY /app/test/oauth2.py  /usr/local/lib/python3.11/dist-packages/spotipy/oauth2.py
-#COPY test/oauth2.py ./root/.cache/pypoetry/virtualenvs/spot-sync-9TtSrW0h-py3.9/lib/python3.9/site-packages/spotipy/oauth2.py
-WORKDIR /app
-
-RUN apt clean -y
-RUN pip cache purge
-#RUN python3 -c 'import startup; startup.build_flacer()'
-#RUN python3 -c 'import startup; startup.build_spotify()'
-CMD ["pytest", "py_test.py","-s","-v"]
-#CMD ["/bin/bash"]
-
-
-#
-# docker run -it --name spotifysync --rm  -v /home/user/Schreibtisch/tempp:/root/.config/spotify_sync  spotifysync:0.3.1 
-# docker run -d --name spotifysync -v /home/user/Schreibtisch/tempp:/root/.config/spotify_sync  spotifysync:0.3.1
-# docker run -it name /bin/bash
-
-# docker run  -it  -v /home/user/Schreibtisch/spotDocker/spotify_sync_docker/flac:/app/flac  -v /home/user/Schreibtisch/tempp:/root/.config/spotify_sync  -p 5678:5678  spotifysync:0.5.20 /bin/bash
-# docker run  -it  -v /home/user/Schreibtisch/spotDocker/spotify_sync_docker:/app  -v /home/user/Schreibtisch/tempp:/root/.config/spotify_sync  -v /home/user/Musik/music:/music -p 5678:5678  spotifysync:0.9.3 /bin/bash
-# docker run  -it  -v /home/user/Schreibtisch/spotDocker/spotify_sync_docker:/app  -v /home/user/Schreibtisch/tempp:/root/.config/spotify_sync -e EMAIL=downlod3rmusik@gmail.com -e PASSWORD=123456789987654321L0L  -p 5678:5678  spotifysync:1.0.3/bin/bash
-# docker run  -it   -v /home/user/Schreibtisch/spotDocker/spotify_sync_docker:/app  -v /home/user/Schreibtisch/tempp:/root/.config/spotify_sync -e EMAIL=downlod3rmusik@gmail.com -e PASSWORD=123456789987654321L0L  -p 5678:5678  spotifysync:1.0.3/bin/bash
-# docker run  -it  -v /home/user/Musik/configs/chrome_user_dir:/root/.config/chromium/ -v /home/user/Schreibtisch/spotDocker/spotify_sync_docker:/app  -v /home/user/Musik/configs/spotify_sync:/root/.config/spotify_sync -v /home/user/Musik/music:/music -e EMAIL=downlod3rmusik@gmail.com -e PASSWORD=123456789987654321L0L  -p 5678:5678  spotifysync:1.0.88 /bin/bash
-# docker run  -it   -v /home/user/Schreibtisch/spotDocker/spotify_sync_docker:/app  -v /home/user/Musik/configs/spotify_sync:/root/.config/spotify_sync -v /home/user/Musik/music:/music -e EMAIL=downlod3rmusik@gmail.com -e PASSWORD=123456789987654321L0L  -p 5678:5678  spotifysync:1.0.88 /bin/bash
-#docker build  -t spotifysync:0.8.2 "." --no-cache
-#docker remove: docker rm -f $(docker ps -a -q)
-#
-#TODO newer Python version may alpine version
-#TODO set env vars in python and remove startuo.sh
+CMD ["python3", "startup.py"]
+#CMD ["python3", "py_test.py","-s","-v"]

@@ -901,7 +901,7 @@ class SpotifyPKCE(SpotifyAuthBase):
         user_data_dir=os.getenv("CHROME_USR_DIR","/home/user/Schreibtisch/spotDocker/spotify_sync_docker/dir")
         options = uc.ChromeOptions()
         if os.getenv("CHROME_USR_DIR") is not None:
-            options.binary_location = "/usr/bin/chromium"
+            options.binary_location =  "/usr/bin/chromium-browser"
             options.arguments.extend(["--no-sandbox", "--disable-setuid-sandbox"]) 
             vdisplay = Xvfb(width=1920, height= 1080, colordepth=16)
             vdisplay.start()
@@ -910,10 +910,10 @@ class SpotifyPKCE(SpotifyAuthBase):
         options.add_argument("--profile-directory=Default")
         options.add_argument("--disable-dev-shm-usage")
         options.add_experimental_option("prefs", {"profile.default_content_setting_values.notifications":2,"safebrowsing.enabled": True})
-        options.binary_location = "/usr/bin/chromium"
+        options.binary_location = "/usr/bin/chromium-browser"
         options.debugger_address = "127.0.0.1:9223"
        # self.browser = uc.Chrome(options=self.options)
-        browser = uc.Chrome(options=options)
+        browser = uc.Chrome(options=options,driver_executable_path=os.getenv("CHROMEDRIVER_PATH","/home/user/Schreibtisch/spotDocker/spotify_sync_docker/test/chromedriver_x64"))
         time.sleep(2)
 
         browser.get(url)
