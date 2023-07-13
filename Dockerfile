@@ -1,6 +1,5 @@
 #FROM navikey/raspbian-buster
-FROM navikey/raspbian-buster
-#FROM debian:stable
+FROM debian:stable
 
 ENV CHROME_USR_DIR="/config"
 ENV	wait_time=10
@@ -24,42 +23,33 @@ EXPOSE 9222
 EXPOSE 5678
 
 #RUN apt-get update && apt-get install nano ffmpeg python3-full pip chromium xvfb curl --no-install-recommends -yqq
-RUN apt-get update 
-RUN apt-get upgrade -yqq
-RUN apt-get dist-upgrade -yqq
+#RUN apt-get update 
+#RUN apt-get upgrade -yqq
+#RUN apt-get dist-upgrade -yqq
 # Install deb
-RUN  apt-get install  --no-install-recommends -yqq nano ffmpeg 
-RUN apt-get install   --no-install-recommends -yqq  chromium xvfb gcc  
+RUN apt-get update && apt-get install  --no-install-recommends -yqq nano ffmpeg chromium python3-dev pip unzip wget
 RUN mkdir -p /music/MP3 /music/TEMP /app /root/.config/spotify_sync /config
 
 # SETUP Python 3.9 
 WORKDIR /app
-# Install necessary dependencies
-RUN apt-get update && apt-get install -y build-essential  wget zlib1g-dev  libffi-dev  libssl-dev libsqlite3-dev
-# Download Python source code
-RUN wget https://www.python.org/ftp/python/3.9.15/Python-3.9.15.tgz && tar -xvf Python-3.9.15.tgz
-# Build and install Python
-RUN cd Python-3.9.15 && ./configure --enable-optimizations && make && make install
-# Clean up downloaded files
-RUN rm -rf Python-3.9.15 Python-3.9.15.tgz
-
-
-
+RUN wget  --no-check-certificate -O chromedriver.zip https://github.com/electron/electron/releases/download/v25.3.0/chromedriver-v25.3.0-linux-arm64.zip
+# Unzip the downloaded file
+RUN unzip chromedriver.zip
+RUN chmod +x chromedriver
+RUN mv chromedriver  /usr/local/bin
+RUN rm -rf * 
 
 COPY . /app
 WORKDIR /app
 
 
 # install spot_sync from requirements 
-#Todo remove unnecesarry installs
-RUN pip3 install --no-cache-dir --upgrade pip  
-RUN pip3 install -r /app/flac/requirements.txt --no-cache-dir 
+RUN pip3 install --no-cache-dir --upgrade pip  --break-system-packages
+RUN pip3 install -r /app/flac/requirements.txt --no-cache-dir --break-system-packages
+#RUN pip3 install . --no-cache-dir --break-system-packages
 #RUN pip3.9 install . --no-cache-dir
 #RUN poetry install
-RUN apt-get update && apt-get install  --no-install-recommends -yqq chromium-chromedriver
 
-#RUN pip3 install . 
-WORKDIR /
 
 #RUN rm /usr/local/lib/python3.9/site-packages/spotipy/oauth2.py -rf
 #COPY test/oauth2.py /usr/local/lib/python3.11/dist-packages/spotipy/oauth2.py
@@ -68,7 +58,7 @@ WORKDIR /
 WORKDIR /app
 #poetry cleanup
 RUN apt clean -y
-RUN pip3.9 cache purge
+RUN pip cache purge
 #RUN python3 -c 'import startup; startup.build_flacer()'
 #RUN python3 -c 'import startup; startup.build_spotify()'
 #RUN poetry cache clear --all
