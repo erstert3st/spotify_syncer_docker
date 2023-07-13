@@ -27,7 +27,7 @@ EXPOSE 5678
 #RUN apt-get upgrade -yqq
 #RUN apt-get dist-upgrade -yqq
 # Install deb
-RUN apt-get update && apt-get install  --no-install-recommends -yqq nano ffmpeg chromium python3-dev pip unzip wget
+RUN apt-get update && apt-get install  --no-install-recommends -yqq nano ffmpeg chromium python3-dev pip unzip wget gcc
 RUN mkdir -p /music/MP3 /music/TEMP /app /root/.config/spotify_sync /config
 
 # SETUP Python 3.9 
@@ -52,7 +52,7 @@ RUN pip3 install -r /app/flac/requirements.txt --no-cache-dir --break-system-pac
 
 
 #RUN rm /usr/local/lib/python3.9/site-packages/spotipy/oauth2.py -rf
-#COPY test/oauth2.py /usr/local/lib/python3.11/dist-packages/spotipy/oauth2.py
+COPY test/oauth2.py /usr/local/lib/python3.11/dist-packages/spotipy/oauth2.py
 #COPY test/oauth2.py  /usr/local/lib/python3.9/site-packages/spotipy/oauth2.py
 #COPY test/oauth2.py ./root/.cache/pypoetry/virtualenvs/spot-sync-9TtSrW0h-py3.9/lib/python3.9/site-packages/spotipy/oauth2.py
 WORKDIR /app
