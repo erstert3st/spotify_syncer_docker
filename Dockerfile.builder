@@ -2,6 +2,7 @@
 FROM python:1.0
 #FROM debian:stable
 
+#ENV CHROME_USR_DIR="/usr/bin/chromium_profile"
 ENV CHROME_USR_DIR="/config"
 ENV	wait_time=10
 
@@ -29,12 +30,14 @@ WORKDIR /app
 
 # install spot_sync from requirements 
 #Todo remove unnecesarry installs
-RUN pip3.9 install --no-cache-dir --upgrade pip  
-RUN pip3.9 install -r /app/flac/requirements.txt --no-cache-dir 
+RUN pip3 install --no-cache-dir --upgrade pip  
+RUN pip3 install -r /app/flac/requirements.txt --no-cache-dir 
 #RUN pip3.9 install . --no-cache-dir
 #RUN poetry install
-RUN apt-get update && apt-get install  --no-install-recommends -yqq chromium-chromedriver
-
+RUN apt-get update && apt-get install  --no-install-recommends -yqq chromium-chromedriver curl
+RUN curl -fsSLo /usr/share/keyrings/brave-browser-archive-keyring.gpg https://brave-browser-apt-release.s3.brave.com/brave-browser-archive-keyring.gpg
+RUN echo "deb [signed-by=/usr/share/keyrings/brave-browser-archive-keyring.gpg] https://brave-browser-apt-release.s3.brave.com/ stable main"| tee /etc/apt/sources.list.d/brave-browser-release.list
+RUN apt-get update && apt install brave-browser -yqq
 #RUN pip3 install . 
 WORKDIR /
 

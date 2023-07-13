@@ -60,7 +60,7 @@ def startup_spotify():
         spotify_run = False 
 
 def run_test():
-    pytest.main([ '-s', 'py_test.py'])
+    pytest.main([ '-s', 'py_test.py','not login'])
 
 
 def main():

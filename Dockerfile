@@ -16,7 +16,7 @@ ENV CONFIG_PROFILE="myFirstProfile"
 ENV MANUAL_CONFIG_FILE="/app/config.json"
 ENV CLIENT_SECRET_FILE="/app/syncer/client_secret.json"
 ENV CHROMEDRIVER_PATH="/usr/bin/chromedriver"
-ENV RUN_TEST=""
+ENV RUN_TEST="True"
 #9090 = spotify 9222-3 debug chrome  5678 debug code
 EXPOSE 9090 
 EXPOSE 9223
@@ -52,8 +52,8 @@ WORKDIR /app
 
 # install spot_sync from requirements 
 #Todo remove unnecesarry installs
-RUN pip3.9 install --no-cache-dir --upgrade pip  
-RUN pip3.9 install -r /app/flac/requirements.txt --no-cache-dir 
+RUN pip3 install --no-cache-dir --upgrade pip  
+RUN pip3 install -r /app/flac/requirements.txt --no-cache-dir 
 #RUN pip3.9 install . --no-cache-dir
 #RUN poetry install
 RUN apt-get update && apt-get install  --no-install-recommends -yqq chromium-chromedriver
@@ -61,9 +61,9 @@ RUN apt-get update && apt-get install  --no-install-recommends -yqq chromium-chr
 #RUN pip3 install . 
 WORKDIR /
 
-RUN rm /usr/local/lib/python3.9/site-packages/spotipy/oauth2.py -rf
+#RUN rm /usr/local/lib/python3.9/site-packages/spotipy/oauth2.py -rf
 #COPY test/oauth2.py /usr/local/lib/python3.11/dist-packages/spotipy/oauth2.py
-COPY test/oauth2.py  /usr/local/lib/python3.9/site-packages/spotipy/oauth2.py
+#COPY test/oauth2.py  /usr/local/lib/python3.9/site-packages/spotipy/oauth2.py
 #COPY test/oauth2.py ./root/.cache/pypoetry/virtualenvs/spot-sync-9TtSrW0h-py3.9/lib/python3.9/site-packages/spotipy/oauth2.py
 WORKDIR /app
 #poetry cleanup

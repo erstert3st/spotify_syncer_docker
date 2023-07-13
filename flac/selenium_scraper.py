@@ -74,7 +74,8 @@ class selenium_scraper(object):
        # url = "chrome://version"
         self.open_chrome(url,"/music/TEMP",3)
 
-        #self.browser.save_screenshot("/app/flac/version.png")  
+        self.browser.save_screenshot("/app/version.png") 
+
         self.get_wait_url("https://nowsecure.nl/",3)
         #self.browser.save_screenshot("/app/flac/secure.png")    
         print(self.browser.current_url)   
@@ -103,9 +104,11 @@ class selenium_scraper(object):
         
        # self.open_chrome(url,"/music/TEMP",3)
         if self.browser.current_url[:27]  == url[:27]:
-           # self.browser.save_screenshot("/app/flac/flags1.png")       
+            self.browser.save_screenshot("/app/flags1.png")       
             WebDriverWait(self.browser, 20).until(EC.visibility_of_element_located((By.NAME, 'identifier'))).send_keys(f'{email}\n')
-            time.sleep(2)
+            time.sleep(15)
+            print("screenshot done")
+            self.browser.save_screenshot("/app/flags1.png") 
             WebDriverWait(self.browser, 20).until(EC.visibility_of_element_located((By.NAME, 'Passwd'))).send_keys(f'{password}\n')
             print("successfully logged in google  ")
 
@@ -148,22 +151,27 @@ class selenium_scraper(object):
     def get_chrome_data(self,userDir="",skipRemoveError=False,downloadDir=""):
         self.url, self.Browser, self.title = "","",""
         
-        options = uc.ChromeOptions()
+        
 
         print(downloadDir)
         #if in docker
 
         if os.getenv("CHROME_USR_DIR") is not None:
+            display = Display(visible=0, size=(1920, 1080))
+            display.start()
+            options = uc.ChromeOptions()
+
            # chrome_exe_path = "/usr/bin/google-chrome"
             #options.binary_location = chrome_exe_pathchro
             options.binary_location = "/usr/bin/chromium-browser"
             #options.binary_location = "/usr/bin/brave-browser"
             options.add_argument("--user-data-dir="+ os.getenv("CHROME_USR_DIR"))
             options.arguments.extend(["--no-sandbox", "--disable-setuid-sandbox"]) 
-            display = Display(visible=0, size=(1920, 1080))
-            display.start()
-            
-            
+
+            options.add_argument("--user-agent=Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/92.0.4515.107 Safari/537.36")
+        else:
+             options = uc.ChromeOptions()
+        
             #vdisplay = Xvfb(width= self.xy[0], height= self.xy[1], colordepth=16)
            #  vdisplay = Xvfb(width=1500, height=730, colordepth=16)
             #vdisplay.start()
@@ -183,7 +191,7 @@ class selenium_scraper(object):
         #options.add_argument("--enable-logging= --v=1 > log.txt 2>&1")
         #options.add_argument("--enable-logging=stderr --v=1")
         options.add_argument("--profile-directory=Default")
-        options.add_argument("--disable-dev-shm-usage")
+        #options.add_argument("--disable-dev-shm-usage")
         
         #options.add_argument("--profile-directory=Defau1t")
        # options.debugger_address = "127.0.0.1:9223"

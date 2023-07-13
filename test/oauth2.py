@@ -872,7 +872,6 @@ class SpotifyPKCE(SpotifyAuthBase):
         return code
     
     def login_google(self,spotify_url):
-        from xvfbwrapper import Xvfb
         from selenium.webdriver.common.by import By
         from selenium.webdriver.support.select import Select
         from selenium.webdriver.support.ui import WebDriverWait
@@ -880,6 +879,7 @@ class SpotifyPKCE(SpotifyAuthBase):
         import undetected_chromedriver as uc
         import command
         import json
+        from pyvirtualdisplay import Display
         url    = 'https://accounts.google.com/ServiceLogin'
         email = os.getenv("EMAIL","")
         password = os.getenv("PASSWORD","")
@@ -898,13 +898,13 @@ class SpotifyPKCE(SpotifyAuthBase):
         
         try: command.run(['pkill', 'chromium']) 
         except:print("no chromium open")
-        user_data_dir=os.getenv("CHROME_USR_DIR","/home/user/Schreibtisch/spotDocker/spotify_sync_docker/dir")
         options = uc.ChromeOptions()
         if os.getenv("CHROME_USR_DIR") is not None:
-            options.binary_location =  "/usr/bin/chromium-browser"
+            options.add_argument("--user-data-dir="+ os.getenv("CHROME_USR_DIR"))     
+            options.binary_location = "/usr/bin/chromium-browser"
             options.arguments.extend(["--no-sandbox", "--disable-setuid-sandbox"]) 
-            vdisplay = Xvfb(width=1920, height= 1080, colordepth=16)
-            vdisplay.start()
+            display = Display(visible=0, size=(1920, 1080))
+            display.start()
         options.add_argument("--user-data-dir="+ os.getenv("CHROME_USR_DIR"))
         options.add_argument("--load-extension="+os.getenv("UBLOCK_DIR","/home/user/Schreibtisch/SCRPPER/seleniumTest/uBlock0.chromium"))
         options.add_argument("--profile-directory=Default")
@@ -915,18 +915,22 @@ class SpotifyPKCE(SpotifyAuthBase):
        # self.browser = uc.Chrome(options=self.options)
         print(os.getenv("CHROMEDRIVER_PATH","/home/user/Schreibtisch/spotDocker/spotify_sync_docker/test/chromedriver_x64"))
         browser = uc.Chrome(options=options,driver_executable_path=os.getenv("CHROMEDRIVER_PATH","/home/user/Schreibtisch/spotDocker/spotify_sync_docker/test/chromedriver_x64"))
+        print("chrome started")
         time.sleep(2)
 
         browser.get(url)
-        time.sleep(1)
+        time.sleep(5)
         if browser.current_url[:27]  == url[:27]:
             WebDriverWait(browser, 20).until(EC.visibility_of_element_located((By.NAME, 'identifier'))).send_keys(f'{email}\n')
-            time.sleep(2)
+            time.sleep(7)
+            print("chrome email done")
             WebDriverWait(browser, 20).until(EC.visibility_of_element_located((By.NAME, 'Passwd'))).send_keys(f'{password}\n')
+            time.sleep(10)
+            
             print("successfully logged in google  ")
-            #browser.save_screenshot("/app/flac/check1.png") 
+            browser.save_screenshot("/app/flac/check_login.png") 
             print("screenshopt done ")
-            time.sleep(3)
+            time.sleep(10)
 
 
         else:
