@@ -145,3 +145,6 @@ drive/client_secret_sample.json
 syncer/client_secret.json
 Dockerfile.secret
 Todo.todo
+Dockerfile.chromium_man
+Dockerfile.Arm_raspian
+Dockerfile copy.Arm
