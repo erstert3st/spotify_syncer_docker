@@ -11,3 +11,4 @@ Dockerfil*
 DEVELOP.md
 composer.yml
 *.png
+*.pyc

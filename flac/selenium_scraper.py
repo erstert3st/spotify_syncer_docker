@@ -202,8 +202,7 @@ class selenium_scraper(object):
         options.add_experimental_option("prefs", {"download.default_directory": downloadDir,
                                             "download.prompt_for_download": False,
                                             "download.directory_upgrade": True,
-                                            "profile.default_content_setting_values.notifications":2,
-                                            "safebrowsing.enabled": True})
+                                            "profile.default_content_setting_values.notifications":2})
         self.options = options
         return options
         #options.add_argument("--profile-directory=Default")
