@@ -68,12 +68,12 @@ def test_copy():
 def test_flac_working(): #    
     print("start test: test_flac_working")
     flacer = Flacer()
-    assert  flacer.check_flac("/flac/flac_test_files/working.flac") == True
+    assert  flacer.check_flac("flac/flac_test_files/working.flac") == True
 
 def test_flac_not_working(): #
     print("start test: test_flac_not_working")
     flacer = Flacer()
-    assert  flacer.check_flac("/flac/flac_test_files/not_working.flac") == False
+    assert  flacer.check_flac("flac/flac_test_files/not_working.flac") == False
 
 def test_google_login():
     print("start test: test_google_login")
@@ -107,4 +107,4 @@ if __name__ == "__main__":
    # os.environ["CHROME_USR_DIR"] = "/config1"
     #os.environ["MANUAL_CONFIG_FILE"] = "/home/user/Schreibtisch/spotDocker/spotify_sync_docker/config.json"
     #os.environ["CONFIG_PROFILE"] = "myFirstProfile"
-    test_google_login()
+    test_flac_not_working()
