@@ -26,7 +26,7 @@ EXPOSE 5678
 #RUN apt-get update && apt-get install nano ffmpeg python3-full pip chromium xvfb curl --no-install-recommends -yqq
 #Todo make universal chromedriver 
 # Install deb
-RUN apt-get update && apt-get install  --no-install-recommends -yqq nano ffmpeg chromium python3-dev pip unzip wget gcc
+RUN apt-get update && apt-get install  --no-install-recommends -yqq nano ffmpeg chromium python3-dev pip unzip wget gcc xvfb
 RUN mkdir -p /music/MP3 /music/TEMP /app /root/.config/spotify_sync /config
 
 # SETUP Python 3.9 
