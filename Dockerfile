@@ -23,21 +23,21 @@ EXPOSE 9222
 EXPOSE 5678
 
 #RUN apt-get update && apt-get install nano ffmpeg python3-full pip chromium xvfb curl --no-install-recommends -yqq
-#RUN apt-get update 
-#RUN apt-get upgrade -yqq
-#RUN apt-get dist-upgrade -yqq
+#Todo make universal chromedriver 
 # Install deb
 RUN apt-get update && apt-get install  --no-install-recommends -yqq nano ffmpeg chromium python3-dev pip unzip wget gcc
 RUN mkdir -p /music/MP3 /music/TEMP /app /root/.config/spotify_sync /config
 
 # SETUP Python 3.9 
 WORKDIR /app
-RUN wget  --no-check-certificate -O chromedriver.zip https://github.com/electron/electron/releases/download/v25.3.0/chromedriver-v25.3.0-linux-arm64.zip
-# Unzip the downloaded file
-RUN unzip chromedriver.zip
-RUN chmod +x chromedriver
-RUN mv chromedriver  /usr/local/bin
-RUN rm -rf * 
+#Instal chromedriver only on AARCH !
+RUN if [ "$(uname -m)" = "aarch64" ]; then \ 
+    wget  --no-check-certificate -O chromedriver.zip https://github.com/electron/electron/releases/download/v25.3.0/chromedriver-v25.3.0-linux-arm64.zip &&\ 
+    unzip chromedriver.zip && \
+    chmod +x chromedriver && \ 
+    mv chromedriver  /usr/local/bin $$ \
+    rm -rf *; fi
+
 
 COPY . /app
 WORKDIR /app

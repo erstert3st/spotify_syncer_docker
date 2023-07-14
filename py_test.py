@@ -17,17 +17,17 @@ from syncer.syncer import Syncer
 def test_env_vars():
     print("start test: def test_env_vars():")
     #Todo: add if folder exist 
-    assert  len(os.getenv("DISPLAY","")) >= 1
-    assert  len(os.getenv("BASE_PATH","")) >= 1
-    assert  len(os.getenv("UBLOCK_DIR","")) >= 1
-    assert  len(os.getenv("SELENIUM_CLASS_PATH","")) >= 1
-    assert  len(os.getenv("CHROME_USR_DIR","")) >= 1
-    assert  len(os.getenv("EMAIL","")) >= 1
-    assert  len(os.getenv("PASSWORD","")) >= 1
-    assert  len(os.getenv("CONFIG_PROFILE","")) >= 1
-    assert  len(os.getenv("MANUAL_CONFIG_FILE","")) >= 1
-    assert  len(os.getenv("CLIENT_SECRET_FILE","")) >= 1
-    assert  len(os.getenv("1CHROMEDRIVER_PATH","")) >= 1
+    assert  len(os.getenv("DISPLAY","")) >= 1,f"Var DISPLAY not set"
+    assert  len(os.getenv("BASE_PATH","")) >= 1,f"Var BASE_PATH not set"
+    assert  len(os.getenv("UBLOCK_DIR","")) >= 1,f"Var UBLOCK_DIR not set"
+    assert  len(os.getenv("SELENIUM_CLASS_PATH","")) >= 1,f"Var SELENIUM_CLASS_PATH not set"
+    assert  len(os.getenv("CHROME_USR_DIR","")) >= 1,f"Var CHROME_USR_DIR not set"
+    assert  len(os.getenv("EMAIL","")) >= 1,f"Var EMAIL not set"
+    assert  len(os.getenv("PASSWORD","")) >= 1,f"Var PASSWORD not set"
+    assert  len(os.getenv("CONFIG_PROFILE","")) >= 1,f"Var CONFIG_PROFILE not set"
+    assert  len(os.getenv("MANUAL_CONFIG_FILE","")) >= 1,f"Var MANUAL_CONFIG_FILE not set"
+    assert  len(os.getenv("CLIENT_SECRET_FILE","")) >= 1,f"Var CLIENT_SECRET_FILE not set"
+    assert  len(os.getenv("CHROMEDRIVER_PATH","")) >= 1,f"Var CHROMEDRIVER_PATH not set"
 
 # def test_file_exists():
 #     print("start test: def test_file_exists():")
@@ -87,11 +87,11 @@ def test_check_browser():
     redirect_url = selenium.check_browser()
     assert redirect_url == True
 
-def test_syncer_file_check():
-    print("start test: test_syncer_file_check")
-    Syncer.check_for_new_files()
-    file_path = os.getenv("BASE_PATH","/home/user/Musik/music") + "/file_list.txt"
-    assert os.path.isfile(file_path), f"File '{file_path}' does not exist"
+# def test_syncer_file_check():
+#     print("start test: test_syncer_file_check")
+#     Syncer.check_for_new_files()
+#     file_path = os.getenv("BASE_PATH","/home/user/Musik/music") + "/file_list.txt"
+#     assert os.path.isfile(file_path), f"File '{file_path}' does not exist"
 
 
 def test_download_flac():

@@ -1,7 +1,6 @@
 command
 undetected_chromedriver
 selenium
-xvfbwrapper
 SpeechRecognition
 debugpy
 ffmpeg
@@ -11,3 +10,4 @@ google-api-python-client
 oauth2client
 spot_sync
 pyvirtualdisplay
+schedule
