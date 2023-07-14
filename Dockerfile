@@ -46,15 +46,10 @@ WORKDIR /app
 # install spot_sync from requirements 
 RUN pip3 install --no-cache-dir --upgrade pip  --break-system-packages
 RUN pip3 install -r /app/flac/requirements.txt --no-cache-dir --break-system-packages
-#RUN pip3 install . --no-cache-dir --break-system-packages
-#RUN pip3.9 install . --no-cache-dir
-#RUN poetry install
 
 
-#RUN rm /usr/local/lib/python3.9/site-packages/spotipy/oauth2.py -rf
+
 COPY test/oauth2.py /usr/local/lib/python3.11/dist-packages/spotipy/oauth2.py
-#COPY test/oauth2.py  /usr/local/lib/python3.9/site-packages/spotipy/oauth2.py
-#COPY test/oauth2.py ./root/.cache/pypoetry/virtualenvs/spot-sync-9TtSrW0h-py3.9/lib/python3.9/site-packages/spotipy/oauth2.py
 WORKDIR /app
 #poetry cleanup
 RUN apt clean -y
@@ -82,7 +77,7 @@ CMD ["python3", "startup.py"]
 
 
 #docker run  -it   -v /home/user/Schreibtisch/spotDocker/spotify_sync_docker:/app  -v /home/user/Musik/configs/spotify_sync/profiles:/root/.config/spotify_sync -v /home/user/Musik/configs/spotify_sync/cache:/root/.local/share/spotify_sync -v /home/user/Musik/music:/music -p 5678:5678  spotifysync:3.0.0 /bin/bash
-#docker build  -t spotifysync:0.8.2 "." --no-cache
+#docker build  -t spotifysync:1.0.0 "." --no-cache
 #docker remove: docker rm -f $(docker ps -a -q)
 #docker run -it -v /home/pi/builder/spotify_sync_docker:/app  navikey/raspbian-bullseye
 #TODO newer Python version may alpine version
