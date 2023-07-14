@@ -155,23 +155,20 @@ class selenium_scraper(object):
 
         print(downloadDir)
         #if in docker
+        options = uc.ChromeOptions()
 
         if os.getenv("CHROME_USR_DIR") is not None:
             display = Display(visible=0, size=(1920, 1080))
             display.start()
-            options = uc.ChromeOptions()
 
            # chrome_exe_path = "/usr/bin/google-chrome"
-            #options.binary_location = chrome_exe_pathchro
-            options.binary_location = "/usr/bin/chromium-browser"
-            #options.binary_location = "/usr/bin/brave-browser"
             options.add_argument("--user-data-dir="+ os.getenv("CHROME_USR_DIR"))
             options.arguments.extend(["--no-sandbox", "--disable-setuid-sandbox"]) 
 
             options.add_argument("--user-agent=Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/92.0.4515.107 Safari/537.36")
-        else:
-             options = uc.ChromeOptions()
-        
+
+        options.binary_location = os.getenv("CHROME_PATH","/usr/bin/chromium-browser") 
+
             #vdisplay = Xvfb(width= self.xy[0], height= self.xy[1], colordepth=16)
            #  vdisplay = Xvfb(width=1500, height=730, colordepth=16)
             #vdisplay.start()

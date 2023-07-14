@@ -27,7 +27,8 @@ def test_env_vars():
     assert  len(os.getenv("CONFIG_PROFILE","")) >= 1,f"Var CONFIG_PROFILE not set"
     assert  len(os.getenv("MANUAL_CONFIG_FILE","")) >= 1,f"Var MANUAL_CONFIG_FILE not set"
     assert  len(os.getenv("CLIENT_SECRET_FILE","")) >= 1,f"Var CLIENT_SECRET_FILE not set"
-    assert  len(os.getenv("CHROMEDRIVER_PATH","")) >= 1,f"Var CHROMEDRIVER_PATH not set"
+    assert  len(os.getenv("CHROMEDRIVER_PATH","")) >= 1,f"Var CHROMEDRIVER_PATH not set" 
+    assert  len(os.getenv("CHROME_PATH","")) >= 1,f"Var CHROME_PATH not set" 
 
 # def test_file_exists():
 #     print("start test: def test_file_exists():")
