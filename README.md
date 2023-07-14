@@ -18,8 +18,9 @@
 Test, test, test!
 
 Cleanup file hierarchy
-
 Cleanup variable names
+in one week cleanup comments!
+add logger
 ### Disclaimer
 
 This tool was written for educational purposes. I will not be responsible if you use this program in bad faith. By using it, you are accepting the [Deezer Terms of Use](https://www.deezer.com/legal/cgu).

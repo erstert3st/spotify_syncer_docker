@@ -914,8 +914,8 @@ class SpotifyPKCE(SpotifyAuthBase):
         #options.binary_location = "/usr/bin/chromium-browser"
         options.debugger_address = "127.0.0.1:9223"
        # self.browser = uc.Chrome(options=self.options)
-        print(os.getenv("CHROMEDRIVER_PATH","/home/user/Schreibtisch/spotDocker/spotify_sync_docker/test/chromedriver_x64"))
-        browser = uc.Chrome(options=options,driver_executable_path=os.getenv("CHROMEDRIVER_PATH","/home/user/Schreibtisch/spotDocker/spotify_sync_docker/test/chromedriver_x64"))
+        print(os.getenv("CHROMEDRIVER_PATH",""))
+        browser = uc.Chrome(options=options,driver_executable_path=os.getenv("CHROMEDRIVER_PATH",""))
         print("chrome started")
         time.sleep(2)
 
