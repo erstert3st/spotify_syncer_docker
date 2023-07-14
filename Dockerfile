@@ -47,7 +47,7 @@ WORKDIR /app
 # install spot_sync from requirements 
 RUN pip3 install --no-cache-dir --upgrade pip  --break-system-packages
 RUN pip3 install -r /app/flac/requirements.txt --no-cache-dir --break-system-packages
-RUN python --version
+RUN python3 --version
 
 
 COPY test/oauth2.py /usr/local/lib/python3.11/dist-packages/spotipy/oauth2.py
