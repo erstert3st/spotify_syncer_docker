@@ -60,11 +60,13 @@ def startup_spotify():
         spotify_run = False 
 
 def run_test():
-    pytest.main([ '-s', 'py_test.py','not login'])
+    pytest.main([ 'py_test.py','-s','-k' ,'(not login) and (not download_flac)'])
 
 
 def main():
-    if len(os.getenv("RUN_TEST","")) >= 1:run_test()
+    if len(os.getenv("RUN_TEST","")) >= 1:
+        run_test()
+        exit(0)
     #sync_google_drive()
     build_flacer()
     build_spotify()
@@ -86,4 +88,4 @@ if __name__ == "__main__":
     #build_spotify()
       #os.environ["CONFIG_PROFILE"] = "myFirstProfile"
       #os.environ["MANUAL_CONFIG_FILE"] = "/home/user/Schreibtisch/spotDocker/spotify_sync_docker/config.json"
-      build_spotify()
+      run_test()

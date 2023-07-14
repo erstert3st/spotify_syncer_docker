@@ -107,4 +107,4 @@ if __name__ == "__main__":
    # os.environ["CHROME_USR_DIR"] = "/config1"
     #os.environ["MANUAL_CONFIG_FILE"] = "/home/user/Schreibtisch/spotDocker/spotify_sync_docker/config.json"
     #os.environ["CONFIG_PROFILE"] = "myFirstProfile"
-    test_login_spotify()
+    test_google_login()

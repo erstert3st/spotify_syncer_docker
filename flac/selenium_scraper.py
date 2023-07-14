@@ -54,7 +54,7 @@ class selenium_scraper(object):
        # self.browser = uc.Chrome(options=self.options)
         #äself.browser = uc.Chrome(options=self.options)
         #self.browser = uc.Chrome(headless=False,user_data_dir=self.user_data_dir,options=self.options)
-        self.browser = uc.Chrome(options=self.options,driver_executable_path=os.getenv("CHROMEDRIVER_PATH","/home/user/Schreibtisch/spotDocker/spotify_sync_docker/test/chromedriver_x64"))
+        self.browser = uc.Chrome(options=self.options,driver_executable_path=os.getenv("CHROMEDRIVER_PATH",""))
         print("chrome startet")
         #time.sleep(100)
         time.sleep(2)
