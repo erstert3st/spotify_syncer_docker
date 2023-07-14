@@ -20,4 +20,4 @@ jobs:
       run: docker build -t spotifyflaccer:0.0.1 --no-cache .
 
     - name: Run tests in Docker container
-      run: docker run --name test spotifyflaccer 
+      run: docker run spotifyflaccer:0.0.1 --name test  
