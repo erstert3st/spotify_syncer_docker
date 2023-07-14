@@ -35,7 +35,7 @@ RUN if [ "$(uname -m)" = "aarch64" ]; then \
     wget  --no-check-certificate -O chromedriver.zip https://github.com/electron/electron/releases/download/v25.3.0/chromedriver-v25.3.0-linux-arm64.zip &&\ 
     unzip chromedriver.zip && \
     chmod +x chromedriver && \ 
-    mv chromedriver  /usr/local/bin $$ \
+    mv chromedriver  /usr/local/bin && \
     rm -rf *; fi
 
 
