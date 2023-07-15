@@ -28,10 +28,11 @@ RUN mkdir -p /music/MP3 /music/TEMP /app /root/.config/spotify_sync /config
 # SETUP Python 3.9 
 WORKDIR /app
 COPY . /app
+RUN apt-get update && apt-get install  --no-install-recommends -yqq chromium-chromedriver
 
 # install spot_sync from requirements 
-RUN pip3 install --no-cache-dir --upgrade pip  --break-system-packages
-RUN pip3 install -r /app/flac/requirements.txt --no-cache-dir --break-system-packages
+RUN pip3 install --no-cache-dir --upgrade pip  
+RUN pip3 install -r /app/flac/requirements.txt --no-cache-dir 
 RUN python3 --version
 
 WORKDIR /
@@ -42,7 +43,7 @@ COPY test/oauth2.py  /usr/local/lib/python3.9/site-packages/spotipy/oauth2.py
 WORKDIR /app
 #poetry cleanup
 RUN apt clean -y
-RUN pip cache purge
+RUN pip3 cache purge
 
 CMD ["python3", "startup.py"]
 #CMD ["python3", "py_test.py","-s","-v"]

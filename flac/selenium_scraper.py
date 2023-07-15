@@ -190,7 +190,7 @@ class selenium_scraper(object):
        # options.add_argument("--headless=new")
        # options.add_argument("detach", True)
         #print("--load-extension="+os.getenv("UBLOCK_DIR","/home/user/Schreibtisch/SCRPPER/seleniumTest/uBlock0.chromium"))
-       # options.add_argument("--load-extension="+os.getenv("UBLOCK_DIR","/home/user/Schreibtisch/SCRPPER/seleniumTest/uBlock0.chromium"))
+        options.add_argument("--load-extension="+os.getenv("UBLOCK_DIR","/home/user/Schreibtisch/SCRPPER/seleniumTest/uBlock0.chromium"))
         #options.add_argument("--enable-logging= --v=1 > log.txt 2>&1")
         #options.add_argument("--enable-logging=stderr --v=1")
         options.add_argument("--profile-directory=Default")

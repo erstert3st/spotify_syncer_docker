@@ -900,17 +900,18 @@ class SpotifyPKCE(SpotifyAuthBase):
         except:print("no chromium open")
         options = uc.ChromeOptions()
         if os.getenv("CHROME_USR_DIR") is not None:
-            options.add_argument("--user-data-dir="+ os.getenv("CHROME_USR_DIR"))     
-            options.arguments.extend(["--no-sandbox", "--disable-setuid-sandbox"]) 
             display = Display(visible=0, size=(1920, 1080))
             display.start()
+            print("display startet")                 
+            options.arguments.extend(["--no-sandbox", "--disable-setuid-sandbox"]) 
+        
         options.add_argument("--user-data-dir="+ os.getenv("CHROME_USR_DIR"))
+        options.binary_location = os.getenv("CHROME_PATH","/usr/bin/chromium-browser")
         options.add_argument("--load-extension="+os.getenv("UBLOCK_DIR","/home/user/Schreibtisch/SCRPPER/seleniumTest/uBlock0.chromium"))
         options.add_argument("--profile-directory=Default")
         options.add_experimental_option("prefs", {"download.prompt_for_download": False,
                                             "download.directory_upgrade": True,
                                             "profile.default_content_setting_values.notifications":2})
-        options.binary_location = os.getenv("CHROME_PATH","/usr/bin/chromium-browser") 
 
         #options.binary_location = "/usr/bin/chromium-browser"
        # options.debugger_address = "127.0.0.1:9223"
