@@ -128,11 +128,17 @@ class selenium_scraper(object):
         #debugpy.breakpoint()
         time.sleep(5)
         #crash in dockerArm
-        dummyVarChromiumBug = self.browser.current_url
+        dummyVarChromiumBug=""
+        try:
 
-        #dummyVarChromiumBug = "https://myaccount.google.com/chromiumBug"
-        print(dummyVarChromiumBug)
+            dummyVarChromiumBug = self.browser.current_url
+
+            #
+            print(dummyVarChromiumBug)
+        except:  
+            dummyVarChromiumBug = "https://myaccount.google.com/chromiumBug"  
         return dummyVarChromiumBug
+        
 
         
     def remote_debugging(self):
