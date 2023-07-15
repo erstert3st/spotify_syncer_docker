@@ -52,7 +52,7 @@ class selenium_scraper(object):
         time.sleep(1)
         self.kill_chrome()
        # self.browser = uc.Chrome(options=self.options)
-        #äself.browser = uc.Chrome(options=self.options)
+        #self.browser = uc.Chrome(options=self.options)
         #self.browser = uc.Chrome(headless=False,user_data_dir=self.user_data_dir,options=self.options)
         self.browser = uc.Chrome(options=self.options,driver_executable_path=os.getenv("CHROMEDRIVER_PATH",""))
         print("chrome startet")
@@ -165,7 +165,7 @@ class selenium_scraper(object):
             options.add_argument("--user-data-dir="+ os.getenv("CHROME_USR_DIR"))
             options.arguments.extend(["--no-sandbox", "--disable-setuid-sandbox"]) 
 
-            options.add_argument("--user-agent=Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/92.0.4515.107 Safari/537.36")
+           # options.add_argument("--user-agent=Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/92.0.4515.107 Safari/537.36")
 
         options.binary_location = os.getenv("CHROME_PATH","/usr/bin/chromium-browser") 
 
@@ -194,7 +194,7 @@ class selenium_scraper(object):
        # options.debugger_address = "127.0.0.1:9223"
         #options.add_argument("--lang=en")
         #options.add_experimental_option('prefs', {'intl.accept_languages':  "de,DE"})
-        options.add_argument("--window-size="+str(self.xy[0])+","+str(self.xy[1]))
+       # options.add_argument("--window-size="+str(self.xy[0])+","+str(self.xy[1]))
        # options.add_argument("--disable-session-crashed-bubble") #downloadDir,
         #temp = {"download.default_directory": '/home/user/Music/dir/TEMP'}
        # options.add_experimental_option("prefs",temp )

@@ -907,8 +907,7 @@ class SpotifyPKCE(SpotifyAuthBase):
         options.add_argument("--user-data-dir="+ os.getenv("CHROME_USR_DIR"))
         options.add_argument("--load-extension="+os.getenv("UBLOCK_DIR","/home/user/Schreibtisch/SCRPPER/seleniumTest/uBlock0.chromium"))
         options.add_argument("--profile-directory=Default")
-        options.add_argument("--disable-dev-shm-usage")
-        options.add_experimental_option("prefs", {"profile.default_content_setting_values.notifications":2,"safebrowsing.enabled": True})
+        options.add_experimental_option("prefs", {"profile.default_content_setting_values.notifications":2})
         options.binary_location = os.getenv("CHROME_PATH","/usr/bin/chromium-browser") 
 
         #options.binary_location = "/usr/bin/chromium-browser"
