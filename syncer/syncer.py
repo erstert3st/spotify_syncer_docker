@@ -5,6 +5,7 @@ import os
 class Syncer():
 #better than os change path shit
     syncer_run = False
+    #check filechanged if so upload to drive
     def main_syncer(check_file_changed=True):
         global syncer_run
         if syncer_run is False:
@@ -13,13 +14,12 @@ class Syncer():
             try:
                 print("start uploud syncer")
                 if check_file_changed is True: file_changed = upload_syncer()
-                if file_changed is True: 
-                    upload_syncer()
+                if file_changed is True:  upload_syncer()
             except Exception as e:
                 print("Error occurred:", e)
-                print("flaccer error")
+                print("syncer error")
         syncer_run = False
-
+    #check if files has changed
     def check_for_new_files():
         previous_state = set()
         file_list = os.getenv("BASE_PATH","/home/user/Musik/music") + "/file_list.txt"

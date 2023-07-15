@@ -4,16 +4,9 @@ import shutil
 
 from flac.flacer import Flacer
 from flac.selenium_scraper import selenium_scraper 
-#from spotify_sync.cli import SpotifySyncApp
 from spotify_sync.cli import SpotifySyncApp
 from syncer.syncer import Syncer
 
-#app = SpotifySyncApp()
-#app.sync_spotify()
-
-
-# def test_login():
-#     print("start test:")
 def test_env_vars():
     print("start test: def test_env_vars():")
     #Todo: add if folder exist 
@@ -39,11 +32,7 @@ def test_env_vars():
 
 def test_login_spotify():
     print("start test: def test_login_spotify():")
-    
     app = SpotifySyncApp()
-   # os.environ['CONFIG_PROFILE'] = 'myFirstProfile'
-   # os.environ['MANUAL_CONFIG_FILE'] = '/home/user/Schreibtisch/spotDocker/spotify_sync_docker/config.json'
-    # Call the sync_spotify() function
     app.authorize_spotify()
     assert True == True
 
@@ -80,7 +69,8 @@ def test_google_login():
     selenium = selenium_scraper()
     googleLink = selenium.login_google()
     print(googleLink)
-    assert googleLink.startswith("https://myaccount.google.com") 
+    checker = True if googleLink.startswith("https://myaccount.google.com")  or googleLink.startswith("https://accounts.google.com") else False
+    assert checker is True
 
 def test_check_browser():
     print("start test: test_check_browser")

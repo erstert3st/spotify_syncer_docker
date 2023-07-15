@@ -1,7 +1,7 @@
 from tendo import singleton
 import os
 import subprocess
-
+    #check filechanged if so upload to drive with only one execution at the time
 def main_syncer(force=False):
         file_changed = False
         try:
@@ -22,7 +22,7 @@ def main_syncer(force=False):
                 process.wait()
         except Exception as e:
             print("Error occurred:", e)
-
+#check if files has changed
 def check_for_new_files():
     previous_state = set()
     file_list_path = os.getenv("BASE_PATH","/home/user/Musik/music") 

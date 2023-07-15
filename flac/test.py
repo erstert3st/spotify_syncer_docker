@@ -17,7 +17,6 @@ options.arguments.extend(["--no-sandbox", "--disable-setuid-sandbox"])
 options.add_argument("--profile-directory=Default")
 
 options.binary_location = "/usr/bin/chromium"
-#browser = uc.Chrome(options=options)
 browser = uc.Chrome(options=options,driver_executable_path="/usr/local/bin/chromedriver")
 print("open")
 browser.save_screenshot("/home/pi/chrome/screenshot/1.png")

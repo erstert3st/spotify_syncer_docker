@@ -852,12 +852,8 @@ class SpotifyPKCE(SpotifyAuthBase):
             prompt = "Enter the URL you were redirected to: "
             response = self._get_user_input(prompt)
         elif no_terminal is True:
-            # from importlib.machinery import SourceFileLoader
-            # browser = SourceFileLoader("selenium_scraper", os.getenv("SELENIUM_CLASS_PATH","/home/user/Schreibtisch/spotDocker/spotify_sync_docker/flac/selenium_scraper.py")).load_module()
-            url = self.get_authorize_url()#here 
-            # response = browser.selenium_scraper.login_google(url)
+            url = self.get_authorize_url()#Todo make scraper to modul and launch it 
             response = self.login_google(url)
-            
             print(response)
         else:
             url = self.get_authorize_url()#here 
@@ -883,14 +879,14 @@ class SpotifyPKCE(SpotifyAuthBase):
         url    = 'https://accounts.google.com/ServiceLogin'
         email = os.getenv("EMAIL","")
         password = os.getenv("PASSWORD","")
-        try:
-            with open('/home/user/Schreibtisch/spotDocker/spotify_sync_docker/flac/login.txt') as f:
+       # try:
+           # with open('/home/user/Schreibtisch/spotDocker/spotify_sync_docker/flac/login.txt') as f:
            # with open('/app/flac/login.txt') as f:
-                login_data = json.loads(f.read())
-                email = login_data["email"]
-                password = login_data["password"]
-        except:
-            print("no file found")
+              #  login_data = json.loads(f.read())
+              #  email = login_data["email"]
+               # password = login_data["password"]
+       # except:
+        #    print("no file found")
 
         if len(email) < 1 or len(password) <1 : 
             print("no Login data")
@@ -913,9 +909,6 @@ class SpotifyPKCE(SpotifyAuthBase):
                                             "download.directory_upgrade": True,
                                             "profile.default_content_setting_values.notifications":2})
 
-        #options.binary_location = "/usr/bin/chromium-browser"
-       # options.debugger_address = "127.0.0.1:9223"
-       # self.browser = uc.Chrome(options=self.options)
         print(os.getenv("CHROMEDRIVER_PATH",""))
         browser = uc.Chrome(options=options,driver_executable_path=os.getenv("CHROMEDRIVER_PATH",""))
         print("chrome started")
@@ -926,13 +919,11 @@ class SpotifyPKCE(SpotifyAuthBase):
         if browser.current_url[:27]  == url[:27]:
             WebDriverWait(browser, 20).until(EC.visibility_of_element_located((By.NAME, 'identifier'))).send_keys(f'{email}\n')
             time.sleep(7)
-            print("chrome email done")
+            print("email done")
             WebDriverWait(browser, 20).until(EC.visibility_of_element_located((By.NAME, 'Passwd'))).send_keys(f'{password}\n')
-            time.sleep(10)
-            
+            time.sleep(10)            
             print("successfully logged in google  ")
-            browser.save_screenshot("/app/flac/check_login.png") 
-            print("screenshopt done ")
+            #browser.save_screenshot("/app/flac/check_login.png") 
             time.sleep(10)
 
 
@@ -955,10 +946,8 @@ class SpotifyPKCE(SpotifyAuthBase):
             print("spotify already logged in ")
         browser.execute_script("window.scrollTo(0,document.body.scrollHeight)")  
         browser.find_element(By.XPATH, '//*[@id="root"]/div/div[2]/div/div/div[3]/button/div[1]').click()
-        print("done spotify")
-       
+        print("done spotify")       
         time.sleep(13)
-        print("hi now may chrash ->")
         redirect = browser.current_url
         print(redirect)
         return redirect
@@ -1010,7 +999,6 @@ class SpotifyPKCE(SpotifyAuthBase):
                 - check_cache - if true, checks for a locally stored token
                                 before requesting a new token
         """
-        print("here123")
         if check_cache:
             token_info = self.validate_token(self.cache_handler.get_cached_token())
             if token_info is not None:

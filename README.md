@@ -18,8 +18,6 @@
 Test, test, test!
 
 Cleanup file hierarchy
-Cleanup variable names
-in one week cleanup comments!
 add logger
 ### Disclaimer
 

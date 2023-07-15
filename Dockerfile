@@ -4,8 +4,7 @@ FROM debian:stable
 ENV CHROME_USR_DIR="/config"
 ENV	wait_time=10
 
-# set display port to avoid crash
-ENV DISPLAY=:99
+ENV DISPLAY=:99 
 ENV BASE_PATH="/music"
 ENV UBLOCK_DIR="/app/flac/ublock_arm/uBlock-Origin"
 ENV SELENIUM_CLASS_PATH="/app/flac/selenium_scraper.py"
@@ -23,7 +22,6 @@ EXPOSE 9223
 EXPOSE 9222
 EXPOSE 5678
 
-#RUN apt-get update && apt-get install nano ffmpeg python3-full pip chromium xvfb curl --no-install-recommends -yqq
 #Todo make universal chromedriver 
 # Install deb
 RUN apt-get update && apt-get install  --no-install-recommends -yqq nano ffmpeg chromium python3-dev pip unzip wget gcc xvfb
@@ -43,45 +41,21 @@ RUN if [ "$(uname -m)" = "aarch64" ]; then \
 COPY . /app
 WORKDIR /app
 
-
-# install spot_sync from requirements 
+# install pip requirements 
 RUN pip3 install --no-cache-dir --upgrade pip  --break-system-packages
 RUN pip3 install -r /app/flac/requirements.txt --no-cache-dir --break-system-packages
 RUN python3 --version
-
+# replace interactive spotify login 
 RUN rm /usr/local/lib/python3.11/dist-packages/spotipy/oauth2.py -rf
-
-
-COPY test/oauth2.py /usr/local/lib/python3.11/dist-packages/spotipy/oauth2.py
+COPY spotify_replace/oauth2.py /usr/local/lib/python3.11/dist-packages/spotipy/oauth2.py
 WORKDIR /app
-#poetry cleanup
+#cleanup
 RUN apt clean -y
 RUN pip cache purge
-#RUN python3 -c 'import startup; startup.build_flacer()'
-#RUN python3 -c 'import startup; startup.build_spotify()'
-#RUN poetry cache clear --all
-# cmd to run container at start
+
 CMD ["python3", "startup.py"]
 #CMD ["python3", "py_test.py","-s","-v"]
-#CMD ["/bin/bash"]
 
-
-#
+#docker run -it   -v /mnt/ssd/media/config/spotify_sync/profiles:/root/.config/spotify_sync   -v /mnt/ssd/media/config/spotify_sync/cache:/root/.local/share/spotify_sync   -v /mnt/ssd/media/music/music:/music   -p 5678:5678   -p 9090:9090 -v /home/pi/builder/spotify_sync_docker:/app -e CHROME_USR_DIR="/usr/bin/chromium_profile"    spotifysyncer:2.0.0 /bin/bash
+#docker remove all container : docker rm -f $(docker ps -a -q)
 #TODO newer Python version may alpine version
-#TODO set env vars in python and remove startuo.sh
-
-
-
-
-# docker run -it name /bin/bash
-
-# docker run  -it  -v /home/user/Musik/configs/chrome_user_dir:/root/.config/chromium/ -v /home/user/Schreibtisch/spotDocker/spotify_sync_docker:/app  -v /home/user/Musik/configs/spotify_sync:/root/.config/spotify_sync -v /home/user/Musik/music:/music -e EMAIL=downlod3rmusik@gmail.com -e PASSWORD=123456789987654321L0L  -p 5678:5678  spotifysync:1.0.88 /bin/bash
-
-
-
-#docker run  -it   -v /home/user/Schreibtisch/spotDocker/spotify_sync_docker:/app  -v /home/user/Musik/configs/spotify_sync/profiles:/root/.config/spotify_sync -v /home/user/Musik/configs/spotify_sync/cache:/root/.local/share/spotify_sync -v /home/user/Musik/music:/music -p 5678:5678  spotifysync:3.0.0 /bin/bash
-#docker build  -t spotifysync:1.0.0 "." --no-cache
-#docker remove: docker rm -f $(docker ps -a -q)
-#docker run -it -v /home/pi/builder/spotify_sync_docker:/app  navikey/raspbian-bullseye
-#TODO newer Python version may alpine version
-#TODO set env vars in python and remove startuo.sh
