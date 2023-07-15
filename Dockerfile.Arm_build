@@ -27,6 +27,7 @@ RUN mkdir -p /music/MP3 /music/TEMP /app /root/.config/spotify_sync /config
 
 # SETUP Python 3.9 
 WORKDIR /app
+COPY . /app
 
 # install spot_sync from requirements 
 RUN pip3 install --no-cache-dir --upgrade pip  --break-system-packages

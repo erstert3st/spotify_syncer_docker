@@ -144,4 +144,6 @@ dir/*
 drive/client_secret_sample.json
 syncer/client_secret.json
 Todo.todo
-Dockerfile.*
+Dockerfile.chrome
+Dockerfile.secret
+Dockerfile.chromium_man
