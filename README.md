@@ -2,6 +2,15 @@
 
 **spotify_Syncer with downloads FLAC files, but you need your own captcha solution!**
 
+## To-Do 
+Test, test, test!
+
+remove commits from fork!
+
+Cleanup file hierarchy
+
+add logger
+
 ## Features:
 - Runs `spotify_sync` CLI continuously in Docker and downloads specific FLAC files
 - Also runs on ARM64
@@ -14,11 +23,7 @@
 2. Set up your own captcha solution.
 3. Build the Docker image.
 
-## To-Do 
-Test, test, test!
 
-Cleanup file hierarchy
-add logger
 ### Disclaimer
 
 This tool was written for educational purposes. I will not be responsible if you use this program in bad faith. By using it, you are accepting the [Deezer Terms of Use](https://www.deezer.com/legal/cgu).
