@@ -48,3 +48,4 @@ if browser.current_url[:27]  == url[:27]:
 
 else:
     print("already logged in google ")
+print(browser.current_url)
