@@ -959,8 +959,9 @@ class SpotifyPKCE(SpotifyAuthBase):
        
         time.sleep(13)
         print("hi now may chrash ->")
-        print(browser.current_url)
-        return browser.current_url
+        redirect = browser.current_url
+        print(redirect)
+        return redirect
        # return browser.current_url
 
     def get_authorization_code(self, response=None):
