@@ -47,7 +47,9 @@ RUN pip3 install -r /app/flac/requirements.txt --no-cache-dir --break-system-pac
 RUN python3 --version
 # replace interactive spotify login 
 RUN rm /usr/local/lib/python3.11/dist-packages/spotipy/oauth2.py -rf
+RUN rm /usr/local/lib/python3.11/dist-packages/spotify_sync/deemix_.py -rf
 COPY spotify_replace/oauth2.py /usr/local/lib/python3.11/dist-packages/spotipy/oauth2.py
+COPY spotify_replace/deemix_.py /usr/local/lib/python3.11/dist-packages/spotify_sync/deemix_.py
 WORKDIR /app
 #cleanup
 RUN apt clean -y
