@@ -33,7 +33,7 @@ class selenium_scraper(object):
         except:print("no chromium open")
 
     def open_chrome(self,link,downloadDir,timer=3):
-        self.user_data_dir=os.getenv("CHROME_USR_DIR","/home/user/Schreibtisch/spotDocker/spotify_sync_docker/dir")
+        self.user_data_dir=os.getenv("CHROME_USR_DIR","/home/user/Dokumente/private_git2/spotify_syncer_docker_old/flac/ublock_arm/uBlock-Origin")
         print(self.user_data_dir)
        # fixChrashes = self.get_chrome_data(self.user_data_dir,True,downloadDir=downloadDir)
         time.sleep(1)
@@ -64,7 +64,7 @@ class selenium_scraper(object):
     #/usr/bin/google-chrome-stable'
 
     def get_chrome_data(self,userDir="",skipRemoveError=False,downloadDir=""):
-        self.url, self.browser, = "","",""
+        self.url, self.browser, = "",""
         print(downloadDir)
         #if in docker
         options = uc.ChromeOptions()
@@ -75,7 +75,7 @@ class selenium_scraper(object):
             options.arguments.extend(["--no-sandbox", "--disable-setuid-sandbox"]) 
 
            # options.add_argument("--user-agent=Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/92.0.4515.107 Safari/537.36")
-        options.add_argument("--user-data-dir="+ os.getenv("CHROME_USR_DIR"))
+        options.add_argument("--user-data-dir="+ os.getenv("CHROME_USR_DIR","/home/user/Schreibtisch/tempp"))
 
         options.binary_location = os.getenv("CHROME_PATH","/usr/bin/chromium-browser") 
 

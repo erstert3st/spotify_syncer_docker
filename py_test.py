@@ -87,7 +87,7 @@ def test_check_browser():
 
 def test_download_flac():
     flacer = Flacer() #Todo add BasePath after test than list files and than remove file 
-    hi = flacer.main()
+    hi = flacer.main(True)
    # hi = flacer.main(True)
     assert hi == True
 
@@ -97,4 +97,4 @@ if __name__ == "__main__":
    # os.environ["CHROME_USR_DIR"] = "/config1"
     #os.environ["MANUAL_CONFIG_FILE"] = "/home/user/Schreibtisch/spotDocker/spotify_sync_docker/config.json"
     #os.environ["CONFIG_PROFILE"] = "myFirstProfile"
-    test_flac_not_working()
+    test_download_flac()

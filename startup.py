@@ -26,6 +26,7 @@ def sync_google_drive(check_file_changed):
     print("google drive sync start:")
     Syncer.main_syncer(check_file_changed)
     print("google drive sync Done!")
+
 def startup_flacer():
     global flacer_run
     if flacer_run is False:
@@ -64,9 +65,6 @@ def run_test():
 
 
 def main():
-    if len(os.getenv("RUN_TEST","")) >= 1:
-        run_test()
-        exit(0)
     #sync_google_drive()
     build_flacer()
     build_spotify()
@@ -88,4 +86,4 @@ if __name__ == "__main__":
     #build_spotify()
       #os.environ["CONFIG_PROFILE"] = "myFirstProfile"
       #os.environ["MANUAL_CONFIG_FILE"] = "/home/user/Schreibtisch/spotDocker/spotify_sync_docker/config.json"
-      run_test()
+      main()
