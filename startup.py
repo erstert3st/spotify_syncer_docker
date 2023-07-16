@@ -65,7 +65,9 @@ def run_test():
 
 
 def main():
-    #sync_google_drive()
+    if len(os.getenv("RUN_TEST")) <= 1:
+        run_test()
+        exit(0)
     build_flacer()
     build_spotify()
     print("startup")
