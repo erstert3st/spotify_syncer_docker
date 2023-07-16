@@ -65,7 +65,7 @@ def run_test():
 
 
 def main():
-    if len(os.getenv("RUN_TEST")) <= 1:
+    if len(os.getenv("RUN_TEST")) >= 1:
         run_test()
         exit(0)
     build_flacer()
