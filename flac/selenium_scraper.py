@@ -1,7 +1,7 @@
 import os
 import random
 import json 
-import command
+import subprocess
 import undetected_chromedriver as uc
 from selenium.webdriver.common.keys import Keys
 from os import environ
@@ -29,7 +29,7 @@ class selenium_scraper(object):
     
     def kill_chrome(self):
         #try: command.run(['pkill', 'brave']) 
-        try: command.run(['pkill', 'chromium']) 
+        try: subprocess.run(["pkill", "chrome"])
         except:print("no chromium open")
 
     def open_chrome(self,link,downloadDir,timer=3):
@@ -295,7 +295,7 @@ class selenium_scraper(object):
             print("captcha done -> default content")
         print("start download")
         self.click_wait(selectorType=By.TAG_NAME,selector="button",timer=3)
-        time.sleep(25)
+        time.sleep(45)
         print("download should be finished") # Todo check if file is done
         return True
     

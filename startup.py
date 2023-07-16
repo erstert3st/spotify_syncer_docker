@@ -74,12 +74,9 @@ def main():
     #Todo : Make flacer as modul 
     #Todo : all other Todos :P
     #schedule.every().day.at("16:30").do(daily_task)
-    schedule.every(5).minute.do(Thread(target=startup_spotify()).start())
-    schedule.every(3).hours.do(Thread(target=startup_flacer()).start())
-   # schedule.every(12).hours.do(Thread(target=sync_google_drive()).start())
+    schedule.every(5).minute.do(Thread(target=startup_spotify()).start)
+    schedule.every(3).hours.do(Thread(target=startup_flacer()).start)
    # schedule.every(24).hours.do(Thread(target=sync_google_drive(False)).start())
-    #schedule.every(10).minutes.do(ten_minute_task)
-
     # Keep the script running
     while True:
         schedule.run_pending()
@@ -88,4 +85,6 @@ if __name__ == "__main__":
     #build_spotify()
       #os.environ["CONFIG_PROFILE"] = "myFirstProfile"
       #os.environ["MANUAL_CONFIG_FILE"] = "/home/user/Schreibtisch/spotDocker/spotify_sync_docker/config.json"
-      main()
+    main()
+   # build_flacer()
+    #schedule.every(1).minute.do(Thread(target=startup_flacer()).start)
