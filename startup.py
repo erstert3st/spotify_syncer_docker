@@ -74,7 +74,7 @@ def main():
     #Todo : Make flacer as modul 
     #Todo : all other Todos :P
     #schedule.every().day.at("16:30").do(daily_task)
-    schedule.every(5).minute.do(Thread(target=startup_spotify()).start)
+    schedule.every(5).minutes.do(Thread(target=startup_spotify()).start)
     schedule.every(3).hours.do(Thread(target=startup_flacer()).start)
    # schedule.every(24).hours.do(Thread(target=sync_google_drive(False)).start())
     # Keep the script running
