@@ -359,7 +359,7 @@ DEFAULTS = {
     "tracknameTemplate":  "%title% - %artist%",
     "albumTracknameTemplate": "%artist% - %title%",
     "playlistTracknameTemplate": "%position% - %artist% - %title%",
-    "createPlaylistFolder": False,
+    "createPlaylistFolder": True,
     "playlistNameTemplate": "%playlist%",
     "createArtistFolder": False,
     "artistNameTemplate": "%artist%",
