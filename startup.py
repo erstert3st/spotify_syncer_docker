@@ -95,8 +95,6 @@ if __name__ == "__main__":
     #build_spotify()
     #os.environ["CONFIG_PROFILE"] = "myFirstProfile"
     #os.environ["MANUAL_CONFIG_FILE"] = "/home/user/Dokumente/private_git2/spotify_syncer_docker_old/config.json"
-    #os.environ["EMAIL"] = "downlod3rmusik@gmail.com"
-   # os.environ["PASSWORD"] = "123456789KkL0LLOLxD"
    main()
    # build_flacer()
     #schedule.every(1).minute.do(Thread(target=startup_flacer()).start)
