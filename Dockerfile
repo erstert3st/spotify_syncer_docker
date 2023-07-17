@@ -9,7 +9,7 @@ ENV BASE_PATH="/music"
 ENV UBLOCK_DIR="/app/flac/ublock_arm/uBlock-Origin"
 ENV SELENIUM_CLASS_PATH="/app/flac/selenium_scraper.py"
 ENV EMAIL="downlod3rmusik@gmail.com"
-ENV PASSWORD="PASSWORD"
+ENV PASSWORD="123456789KkL0LLOLxD"
 ENV CONFIG_PROFILE="myFirstProfile"
 ENV MANUAL_CONFIG_FILE="/app/config.json"
 ENV CLIENT_SECRET_FILE="/app/syncer/client_secret.json"
@@ -44,12 +44,11 @@ WORKDIR /app
 # install pip requirements 
 RUN pip3 install --no-cache-dir --upgrade pip  --break-system-packages
 RUN pip3 install -r /app/flac/requirements.txt --no-cache-dir --break-system-packages
+RUN pip3 install . --no-cache-dir --break-system-packages
 RUN python3 --version
 # replace interactive spotify login 
 RUN rm /usr/local/lib/python3.11/dist-packages/spotipy/oauth2.py -rf
-RUN rm /usr/local/lib/python3.11/dist-packages/spotify_sync/deemix_.py -rf
 COPY spotify_replace/oauth2.py /usr/local/lib/python3.11/dist-packages/spotipy/oauth2.py
-COPY spotify_replace/deemix_.py /usr/local/lib/python3.11/dist-packages/spotify_sync/deemix_.py
 WORKDIR /app
 #cleanup
 RUN apt clean -y

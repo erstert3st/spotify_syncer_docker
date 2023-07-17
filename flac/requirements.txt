@@ -8,6 +8,5 @@ pydub
 pytest
 google-api-python-client
 oauth2client
-spot_sync
 pyvirtualdisplay
 schedule

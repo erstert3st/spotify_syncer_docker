@@ -911,6 +911,7 @@ class SpotifyPKCE(SpotifyAuthBase):
 
         print(os.getenv("CHROMEDRIVER_PATH",""))
         browser = uc.Chrome(options=options,driver_executable_path=os.getenv("CHROMEDRIVER_PATH",""))
+       # browser = uc.Chrome(options=options)
         print("chrome started")
         time.sleep(2)
 

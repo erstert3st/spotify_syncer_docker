@@ -49,7 +49,8 @@ def startup_spotify():
             #app.authorize_spotify()
             app.authorize_spotify() #Todo do you need it ? 
             try:
-                app.auto()
+                output = subprocess.check_output("spotify_sync run auto --profile myFirstProfile", shell=True, cwd="/")
+                print(output.decode())
                 if Syncer.check_for_new_files() is True:
                     print("new Files found start flaccer")
                     Flacer.main()
@@ -83,8 +84,12 @@ def main():
         time.sleep(1)
 if __name__ == "__main__":
     #build_spotify()
-      #os.environ["CONFIG_PROFILE"] = "myFirstProfile"
-      #os.environ["MANUAL_CONFIG_FILE"] = "/home/user/Schreibtisch/spotDocker/spotify_sync_docker/config.json"
-    main()
+    #os.environ["CONFIG_PROFILE"] = "myFirstProfile"
+    #os.environ["MANUAL_CONFIG_FILE"] = "/home/user/Dokumente/private_git2/spotify_syncer_docker_old/config.json"
+    os.environ["EMAIL"] = "downlod3rmusik@gmail.com"
+    os.environ["PASSWORD"] = "123456789KkL0LLOLxD"
+    startup_spotify()
+
+   # main()
    # build_flacer()
     #schedule.every(1).minute.do(Thread(target=startup_flacer()).start)
