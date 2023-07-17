@@ -36,7 +36,7 @@
             "request": "launch",
             "cwd": "${workspaceFolder}",
             "module": "spotify_sync",
-            "args": ["utils","authorize-spotify", "--profile","myFirstProfile"],
+            "args": ["run","auto", "--profile","myFirstProfile",],
             "justMyCode": false
         }
     ]
