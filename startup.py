@@ -30,6 +30,14 @@ def sync_google_drive(check_file_changed):
 def startup_flacer():
     global flacer_run
     if flacer_run is False:
+        Thread(target=start_flacer()).start()
+def startup_spotify():
+    global spotify_run
+    if spotify_run is False:
+        Thread(target=start_spotify()).start()
+def start_flacer():
+    global flacer_run
+    if flacer_run is False:
         flacer_run  = True   
         try:
             flacer = Flacer() 
@@ -40,7 +48,8 @@ def startup_flacer():
             print("flaccer error")
     flacer_run = False
 
-def startup_spotify():
+
+def start_spotify():
     global spotify_run
     if spotify_run is False:
         spotify_run  = True
@@ -66,7 +75,7 @@ def run_test():
 
 
 def main():
-    if len(os.getenv("RUN_TEST")) >= 1:
+    if len(os.getenv("RUN_TEST","")) >= 1:
         run_test()
         exit(0)
     build_flacer()
@@ -75,8 +84,8 @@ def main():
     #Todo : Make flacer as modul 
     #Todo : all other Todos :P
     #schedule.every().day.at("16:30").do(daily_task)
-    schedule.every(5).minutes.do(Thread(target=startup_spotify()).start)
-    schedule.every(3).hours.do(Thread(target=startup_flacer()).start)
+    schedule.every(1).minutes.do(startup_spotify)
+    schedule.every(3).hours.do(startup_flacer)
    # schedule.every(24).hours.do(Thread(target=sync_google_drive(False)).start())
     # Keep the script running
     while True:
@@ -88,8 +97,6 @@ if __name__ == "__main__":
     #os.environ["MANUAL_CONFIG_FILE"] = "/home/user/Dokumente/private_git2/spotify_syncer_docker_old/config.json"
     #os.environ["EMAIL"] = "downlod3rmusik@gmail.com"
    # os.environ["PASSWORD"] = "123456789KkL0LLOLxD"
-    startup_spotify()
-
-   # main()
+   main()
    # build_flacer()
     #schedule.every(1).minute.do(Thread(target=startup_flacer()).start)
