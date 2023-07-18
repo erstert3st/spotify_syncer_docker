@@ -12,6 +12,7 @@ def main_syncer(force=False):
             if force is True or file_changed is True: 
                 print("file changed start upload:")
                 path = os.getenv("BASE_PATH","") + "/file_list.txt"
+                print(path)
                 if len(path) <=15:
                     print("BASE_PATH should be not ''")
                     raise Exception
@@ -25,9 +26,10 @@ def main_syncer(force=False):
 #check if files has changed
 def check_for_new_files():
     previous_state = set()
-    file_list_path = os.getenv("BASE_PATH","/home/user/Musik/music") 
+    file_list_path = os.getenv("BASE_PATH","") 
     file_list = file_list_path + "/file_list.txt"
-    
+    print(file_list_path)
+    print(file_list_path)
     if os.path.exists(file_list):
         with open(file_list, 'r') as file:
             previous_state.update(file.read().splitlines())
