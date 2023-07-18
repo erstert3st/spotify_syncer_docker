@@ -3,8 +3,6 @@
 **spotify_Syncer with downloads FLAC files, but you need your own captcha solution!**
 
 ## To-Do 
-Test, test, test!
-
 remove commits from fork!
 
 Cleanup file hierarchy
