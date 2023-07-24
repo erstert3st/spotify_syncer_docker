@@ -6,7 +6,7 @@
 remove commits from fork!
 
 Cleanup file hierarchy
-
+fix Captcha in Docker
 add logger
 
 ## Features:
