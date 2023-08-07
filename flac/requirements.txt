@@ -10,3 +10,4 @@ google-api-python-client
 oauth2client
 pyvirtualdisplay
 schedule
+pytest-azurepipelines
